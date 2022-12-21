@@ -1,0 +1,7 @@
+@import "src/consts.scss";
+
+.sidenav {
+  height: calc(90vh - 2px);
+  width: 200px;
+  border-right: 2px solid $secondary;
+}

@@ -1,0 +1,15 @@
+@import "src/consts.scss";
+
+.navbar {
+  width: 100%;
+  height: 10vh;
+  border-bottom: 2px solid $secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .site-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
