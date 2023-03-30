@@ -75,4 +75,10 @@
       color: darken($color: $primary, $amount: 10);
     }
   }
+
+  .error-label {
+    margin-top: 10px;
+    color: red;
+    text-align: center;
+  }
 }
