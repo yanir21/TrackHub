@@ -12,10 +12,10 @@ import {
 import { CreateUserDto } from "src/dto/create-user.dto";
 import { UpdateUserDto } from "src/dto/update-user.dto";
 import { UserService } from "src/service/user/user.service";
-@Controller("user")
+@Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post()
+  @Post("/register")
   async createUser(@Res() response, @Body() createUserDto: CreateUserDto) {
     try {
       const newUser = await this.userService.createUser(createUserDto);

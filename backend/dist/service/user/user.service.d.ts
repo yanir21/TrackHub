@@ -1,7 +1,7 @@
-import { CreateUserDto } from 'src/dto/create-user.dto';
-import { IUser } from 'src/interface/user.interface';
+import { CreateUserDto } from "src/dto/create-user.dto";
+import { IUser } from "src/interface/user.interface";
 import { Model } from "mongoose";
-import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { UpdateUserDto } from "src/dto/update-user.dto";
 export declare class UserService {
     private userModel;
     constructor(userModel: Model<IUser>);

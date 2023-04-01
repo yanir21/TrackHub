@@ -1,6 +1,6 @@
-import { CreateUserDto } from 'src/dto/create-user.dto';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
-import { UserService } from 'src/service/user/user.service';
+import { CreateUserDto } from "src/dto/create-user.dto";
+import { UpdateUserDto } from "src/dto/update-user.dto";
+import { UserService } from "src/service/user/user.service";
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);

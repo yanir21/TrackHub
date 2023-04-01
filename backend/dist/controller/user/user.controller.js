@@ -25,15 +25,15 @@ let UserController = class UserController {
         try {
             const newUser = await this.userService.createUser(createUserDto);
             return response.status(common_1.HttpStatus.CREATED).json({
-                message: 'User has been created successfully',
+                message: "User has been created successfully",
                 newUser,
             });
         }
         catch (err) {
             return response.status(common_1.HttpStatus.BAD_REQUEST).json({
                 statusCode: 400,
-                message: 'Error: User not created!',
-                error: 'Bad Request'
+                message: "Error: User not created!",
+                error: "Bad Request",
             });
         }
     }
@@ -41,7 +41,7 @@ let UserController = class UserController {
         try {
             const existingUser = await this.userService.updateUser(userId, updateUserDto);
             return response.status(common_1.HttpStatus.OK).json({
-                message: 'User has been successfully updated',
+                message: "User has been successfully updated",
                 existingUser,
             });
         }
@@ -53,7 +53,8 @@ let UserController = class UserController {
         try {
             const userData = await this.userService.getAllUsers();
             return response.status(common_1.HttpStatus.OK).json({
-                message: 'All users data found successfully', userData,
+                message: "All users data found successfully",
+                userData,
             });
         }
         catch (err) {
@@ -64,7 +65,8 @@ let UserController = class UserController {
         try {
             const existingUser = await this.userService.getUser(userId);
             return response.status(common_1.HttpStatus.OK).json({
-                message: 'User found successfully', existingUser,
+                message: "User found successfully",
+                existingUser,
             });
         }
         catch (err) {
@@ -75,7 +77,7 @@ let UserController = class UserController {
         try {
             const deletedUser = await this.userService.deleteUser(userId);
             return response.status(common_1.HttpStatus.OK).json({
-                message: 'User deleted successfully',
+                message: "User deleted successfully",
                 deletedUser,
             });
         }
@@ -85,7 +87,7 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)("/register"),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -93,9 +95,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
-    (0, common_1.Put)('/:id'),
+    (0, common_1.Put)("/:id"),
     __param(0, (0, common_1.Res)()),
-    __param(1, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Param)("id")),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String, update_user_dto_1.UpdateUserDto]),
@@ -109,23 +111,23 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUsers", null);
 __decorate([
-    (0, common_1.Get)('/:id'),
+    (0, common_1.Get)("/:id"),
     __param(0, (0, common_1.Res)()),
-    __param(1, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUser", null);
 __decorate([
-    (0, common_1.Delete)('/:id'),
+    (0, common_1.Delete)("/:id"),
     __param(0, (0, common_1.Res)()),
-    __param(1, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 UserController = __decorate([
-    (0, common_1.Controller)('user'),
+    (0, common_1.Controller)("users"),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
 exports.UserController = UserController;

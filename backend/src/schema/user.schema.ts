@@ -6,7 +6,7 @@ export class User {
   @Prop()
   password: string;
   @Prop()
-  displayname: string;
+  displayName: string;
   @Prop()
   imageurl: string;
 }

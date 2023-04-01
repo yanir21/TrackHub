@@ -16,12 +16,16 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const bcrypt = require("bcrypt");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
     async createUser(createUserDto) {
-        const newUser = await new this.userModel(createUserDto);
+        const hashSalt = process.env.HASH_SALT;
+        const hashedPassowrd = await bcrypt.hash(createUserDto.password, hashSalt);
+        const userWithHashedPassword = Object.assign(Object.assign({}, createUserDto), { password: hashedPassowrd });
+        const newUser = await new this.userModel(userWithHashedPassword);
         return newUser.save();
     }
     async updateUser(userId, updateUserDto) {
@@ -34,7 +38,7 @@ let UserService = class UserService {
     async getAllUsers() {
         const userData = await this.userModel.find();
         if (!userData || userData.length == 0) {
-            throw new common_1.NotFoundException('Users data not found!');
+            throw new common_1.NotFoundException("Users data not found!");
         }
         return userData;
     }
@@ -55,7 +59,7 @@ let UserService = class UserService {
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('User')),
+    __param(0, (0, mongoose_1.InjectModel)("User")),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;

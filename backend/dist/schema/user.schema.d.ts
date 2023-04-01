@@ -26,7 +26,7 @@
 export declare class User {
     username: string;
     password: string;
-    displayname: string;
+    displayName: string;
     imageurl: string;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, import("mongoose").Document<unknown, any, User> & Omit<User & {

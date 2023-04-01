@@ -39,7 +39,7 @@ const LoginPage = () => {
         <div className="form-section">
           <div className="field-title">Password</div>
           <input
-            type="text"
+            type="password"
             className="field-input"
             onChange={(event) => setPassword(event.target.value)}
           />

@@ -8,6 +8,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorLabel, setErrorLabel] = useState<string>("");
+  const [displayName, setDisplayName] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: any) => {
@@ -15,7 +16,7 @@ const RegisterPage = () => {
     if (!password || !username) {
       setErrorLabel("Please fill both email and password");
     } else {
-      const user = await register(username, password);
+      const user = await register(username, password, displayName);
       navigate("/");
     }
   };
@@ -41,9 +42,17 @@ const RegisterPage = () => {
         <div className="form-section">
           <div className="field-title">Password</div>
           <input
-            type="text"
+            type="password"
             className="field-input"
             onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
+        <div className="form-section">
+          <div className="field-title">Display Name</div>
+          <input
+            type="text"
+            className="field-input"
+            onChange={(event) => setDisplayName(event.target.value)}
           />
         </div>
         <div className="submit-container">
