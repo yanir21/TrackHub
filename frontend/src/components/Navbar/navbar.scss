@@ -6,10 +6,19 @@
   border-bottom: 2px solid $secondary;
   display: flex;
   align-items: center;
-  justify-content: center;
-
+    justify-content: flex-start;
   .site-name {
     font-size: 2rem;
     font-weight: bold;
+  }
+
+  .navbar-center {
+    position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+  .navbar-left {
+    margin-left: 2rem;
   }
 }

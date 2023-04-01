@@ -10,6 +10,7 @@ function App() {
       <Navbar />
       <div className="site-container">
         {/* userLoggedIn && <Sidenav /> */}
+        <Sidenav />
         <div className="content">
           <Router />
         </div>

@@ -1,0 +1,73 @@
+@import '/src/consts.scss';
+
+$container-padding-x: 0rem;
+$container-padding-y: 2rem;
+
+$container-margin-x: 5rem;
+$container-margin-y: 2rem;
+
+$container-width: calc(100% - #{$container-padding-x}*2 - #{$container-margin-x}*2);;
+
+.audio-card-container {
+    text-align: left;
+    justify-content: space-between;
+    display: flex;
+    width: $container-width;
+    border: 1px solid $secondary;
+    padding: $container-padding-y $container-padding-x;
+    margin: $container-margin-y $container-margin-x;
+    align-items: center;
+    height: 5rem;
+}
+
+.audio-card-first-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 2rem;
+    flex:2.5;
+}
+.audio-card-second-column {
+    flex-direction: column;
+    flex:4;
+    margin-right: 2rem;
+}
+
+.song-name {
+    margin-top: -0.75rem;
+    display: flex;
+    margin-left: 4rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.song-description {
+    display: flex;
+    margin-left: 4rem;
+    color: $third;
+}
+
+.audio-file-container {
+    display: flex;
+    justify-content: center;
+}
+.audio-file {
+    width: 100%;
+}
+
+.read-more {
+    background: none;
+    border: none;
+    color: $primary;
+    cursor: pointer;
+    font-size: inherit;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.tags {
+    display: flex;
+    justify-content: end;
+    flex: 1;
+}
+

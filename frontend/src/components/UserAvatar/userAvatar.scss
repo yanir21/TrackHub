@@ -1,0 +1,8 @@
+@import "src/consts.scss";
+
+.user-avatar {
+    color: $primary;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
