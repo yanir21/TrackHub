@@ -24,6 +24,7 @@ export class UserController {
         newUser,
       });
     } catch (err) {
+      console.log(err)
       return response.status(HttpStatus.BAD_REQUEST).json({
         statusCode: 400,
         message: "Error: User not created!",

@@ -30,6 +30,7 @@ let UserController = class UserController {
             });
         }
         catch (err) {
+            console.log(err);
             return response.status(common_1.HttpStatus.BAD_REQUEST).json({
                 statusCode: 400,
                 message: "Error: User not created!",
