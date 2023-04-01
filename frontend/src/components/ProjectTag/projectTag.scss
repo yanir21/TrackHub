@@ -1,0 +1,19 @@
+@import '/src/consts.scss';
+
+.project-tag {
+    flex:0,0 auto;
+    min-width: 1rem;
+    height: 0.75rem;;
+    display: inline-flex;
+    align-items: center;
+    margin: 0.5rem 0.5rem;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid $secondary;
+    border-radius: 0.5rem;
+    background-color: $primary;
+    color: $off-white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    justify-content: center;
+
+}
