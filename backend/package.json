@@ -30,6 +30,7 @@
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
     "mongoose": "^7.0.3",
+    "nest": "^0.1.6",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5"
   },

@@ -1,12 +1,10 @@
-import http from "./http";
+import http from './http';
 
 export const login = async (username: string, password: string) =>
-  (await http.post("/login", { username, password })).data;
+  await http.post('/auth/login', { username, password });
 
 export const register = async (
   username: string,
   password: string,
   displayName: string
-) =>
-  (await http.post("/users/register", { username, password, displayName }))
-    .data;
+) => await http.post('/users/register', { username, password, displayName });
