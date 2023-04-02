@@ -2,7 +2,7 @@ import React from "react";
 import "./sidenav.scss";
 
 const Sidenav = () => {
-  return <div className="sidenav"></div>;
+  return <span className="sidenav"></span>;
 };
 
 export default Sidenav;

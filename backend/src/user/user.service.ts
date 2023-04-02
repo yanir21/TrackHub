@@ -3,25 +3,41 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IUser } from 'src/user/user.interface';
 import { Model } from "mongoose";
+import * as bcrypt from "bcrypt";
 import { UpdateUserDto } from 'src/user/dto/update-user.dto';
+
 @Injectable()
 export class UserService {
-constructor(@InjectModel('User') private userModel:Model<IUser>) { }
-async createUser(createUserDto: CreateUserDto): Promise<IUser> {
-   const newUser = await new this.userModel(createUserDto);
-   return newUser.save();
-}
-async updateUser(userId: string, updateUserDto: UpdateUserDto): Promise<IUser> {
-    const existingUser = await        this.userModel.findByIdAndUpdate(userId, updateUserDto, { new: true });
-   if (!existingUser) {
-     throw new NotFoundException(`User #${userId} not found`);
-   }
-   return existingUser;
-}
-async getAllUsers(): Promise<IUser[]> {
+  constructor(@InjectModel("User") private userModel: Model<IUser>) {}
+  async createUser(createUserDto: CreateUserDto): Promise<IUser> {
+    const hashSalt = process.env.HASH_SALT;
+    const hashedPassowrd = await bcrypt.hash(createUserDto.password, hashSalt);
+
+    const userWithHashedPassword = {
+      ...createUserDto,
+      password: hashedPassowrd,
+    };
+    const newUser = await new this.userModel(userWithHashedPassword);
+    return newUser.save();
+  }
+  async updateUser(
+    userId: string,
+    updateUserDto: UpdateUserDto
+  ): Promise<IUser> {
+    const existingUser = await this.userModel.findByIdAndUpdate(
+      userId,
+      updateUserDto,
+      { new: true }
+    );
+    if (!existingUser) {
+      throw new NotFoundException(`User #${userId} not found`);
+    }
+    return existingUser;
+  }
+  async getAllUsers(): Promise<IUser[]> {
     const userData = await this.userModel.find();
     if (!userData || userData.length == 0) {
-        throw new NotFoundException('Users data not found!');
+      throw new NotFoundException("Users data not found!");
     }
     return userData;
 }
@@ -43,9 +59,9 @@ async getUserByUsername(username: string) {
 
 async deleteUser(userId: string): Promise<IUser> {
     const deletedUser = await this.userModel.findByIdAndDelete(userId);
-   if (!deletedUser) {
-     throw new NotFoundException(`User #${userId} not found`);
-   }
-   return deletedUser;
-}
+    if (!deletedUser) {
+      throw new NotFoundException(`User #${userId} not found`);
+    }
+    return deletedUser;
+  }
 }
