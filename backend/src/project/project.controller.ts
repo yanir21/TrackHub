@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Put,
+} from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -6,15 +15,19 @@ import { User } from 'src/shared/decorators/user.decorator';
 import { UserService } from 'src/user/user.service';
 import { AuthGuard } from 'src/auth/auth.gurad';
 
-@Controller('project')
+@Controller('projects')
 @UseGuards(AuthGuard)
 export class ProjectController {
-  constructor
-    (private readonly projectService: ProjectService,
-     private readonly userService: UserService) {}
+  constructor(
+    private readonly projectService: ProjectService,
+    private readonly userService: UserService
+  ) {}
 
   @Post()
-  async create(@Body() createProjectDto: CreateProjectDto, @User() username: string) {
+  async create(
+    @Body() createProjectDto: CreateProjectDto,
+    @User() username: string
+  ) {
     const author = await this.userService.getUserByUsername(username);
     return await this.projectService.create(createProjectDto, author._id);
   }
@@ -30,7 +43,10 @@ export class ProjectController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto
+  ) {
     return await this.projectService.update(id, updateProjectDto);
   }
 
