@@ -46,3 +46,5 @@ build/config\.gypi
 Footer
 © 2023 GitHub, Inc.
 Footer navigation
+
+**/dist/**

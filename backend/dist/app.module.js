@@ -7,26 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-require("dotenv/config");
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const user_schema_1 = require("./schema/user.schema");
-const user_service_1 = require("./service/user/user.service");
-const user_controller_1 = require("./controller/user/user.controller");
-const dbUsername = process.env.MONGO_USERNAME;
-const dbPassword = process.env.MONGO_PASSWORD;
+const auth_module_1 = require("./auth/auth.module");
+const user_module_1 = require("./user/user.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot(`mongodb+srv://${dbUsername}:${dbPassword}@yanir-toar.0tfcqu7.mongodb.net/trackhub?retryWrites=true&w=majority`),
-            mongoose_1.MongooseModule.forFeature([{ name: "User", schema: user_schema_1.UserSchema }]),
+            user_module_1.UserModule,
+            auth_module_1.AuthModule
         ],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, user_service_1.UserService],
+        controllers: [app_controller_1.AppController],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
