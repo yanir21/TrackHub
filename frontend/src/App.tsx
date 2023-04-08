@@ -29,6 +29,15 @@ const App = () => {
     }
   }, []);
 
+  const initialLoad = async () => {
+    const token = await getToken();
+    if (!token) {
+      navigate('/login');
+    } else {
+      login(token);
+    }
+  };
+
   const login = useCallback((token: string) => {
     setCurrentUser(decodeToken(token));
     navigate('/explore');
@@ -48,15 +57,6 @@ const App = () => {
     }),
     [currentUser, login]
   );
-
-  const initialLoad = async () => {
-    const token = await getToken();
-    if (!token) {
-      navigate('/login');
-    } else {
-      login(token);
-    }
-  };
 
   return (
     <AuthContext.Provider value={contextValue}>

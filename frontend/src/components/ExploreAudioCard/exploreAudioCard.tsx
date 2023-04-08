@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Project } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
+import classNames from 'classnames';
 import './exploreAudioCard.scss';
 interface ExploreAudioCardProps {
   project: Project;
+  showAuthor?: boolean;
 }
 
-export default function ExploreAudioCard({ project }: ExploreAudioCardProps) {
+export default function ExploreAudioCard({
+  project,
+  showAuthor = true
+}: ExploreAudioCardProps) {
   const [readMoreClicked, setReadMoreClicked] = useState(false);
 
   const SongName = () => <div className='song-name'>{project.title}</div>;
@@ -46,8 +51,12 @@ export default function ExploreAudioCard({ project }: ExploreAudioCardProps) {
 
   return (
     <div className='audio-card-container'>
-      <div className='audio-card-first-column'>
-        <DisplayUser displayName={project.author.displayName} />
+      <div
+        className={classNames('audio-card-first-column', {
+          'author-displayed': showAuthor
+        })}
+      >
+        {showAuthor && <DisplayUser displayName={project.author.displayName} />}
         <SongName />
         <SongDescription />
       </div>
