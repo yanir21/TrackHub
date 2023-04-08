@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './loginPage.scss';
 import SVG from 'react-inlinesvg';
-import { login } from '../../services/userService';
+import { serverLogin } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
-import { DecodedToken } from '../../services/auth';
 import { HttpStatusCode } from 'axios';
+import { setToken } from '../../services/auth';
+import { AuthContext } from '../../App';
+import { AuthContextType } from '../../models/AuthContext';
 const LoginPage = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorLabel, setErrorLabel] = useState<string>('');
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext) as AuthContextType;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (!password || !username) {
       setErrorLabel('Please fill both email and password');
     } else {
-      const response = await login(username, password);
+      const response = await serverLogin(username, password);
       if (response.status === HttpStatusCode.Ok) {
         const token = response.data.access_token;
-        localStorage.token = token;
-        const decodedToken: DecodedToken = jwt_decode(localStorage.token);
-        localStorage.setItem('username', decodedToken.username);
-        localStorage.setItem('displayName', decodedToken.displayName);
-        window.location.href = '/explore';
+        setToken(token);
+        login(token);
       } else {
         setErrorLabel('Invalid username or password');
       }
     }
   };
-
-  useEffect(() => {
-    if (localStorage.token) {
-      localStorage.clear();
-    }
-  }, []);
 
   return (
     <div className='login-page'>

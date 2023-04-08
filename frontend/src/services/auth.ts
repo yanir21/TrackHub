@@ -1,17 +1,12 @@
-export interface DecodedToken {
-  username: string;
-  displayName: string;
-  // other properties of your decoded token object
-}
+import { UserAuth } from '../models/user';
+import jwt_decode from 'jwt-decode';
 
 export const getToken = () => {
   return localStorage.getItem('token');
 };
 
-export const getUsername = () => {
-  return localStorage.getItem('username') || '';
+export const setToken = (token: string) => {
+  localStorage.setItem('token', token);
 };
 
-export const getDisplayName = () => {
-  return localStorage.getItem('displayName') || '';
-};
+export const decodeToken = (token: string): UserAuth => jwt_decode(token);
