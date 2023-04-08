@@ -38,9 +38,11 @@ const App = () => {
     }
   };
 
-  const login = useCallback((token: string) => {
+  const login = useCallback((token: string, redirect?: boolean) => {
     setCurrentUser(decodeToken(token));
-    navigate('/explore');
+    if (redirect) {
+      navigate('/explore');
+    }
   }, []);
 
   const logout = useCallback(() => {

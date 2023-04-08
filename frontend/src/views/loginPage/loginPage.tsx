@@ -22,7 +22,7 @@ const LoginPage = () => {
         const response = await serverLogin(username, password);
         const token = response.data.access_token;
         setToken(token);
-        login(token);
+        login(token, true);
       } catch {
         setErrorLabel('Incorrect username or password');
       }
