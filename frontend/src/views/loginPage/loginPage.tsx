@@ -18,13 +18,13 @@ const LoginPage = () => {
     if (!password || !username) {
       setErrorLabel('Please fill both email and password');
     } else {
-      const response = await serverLogin(username, password);
-      if (response.status === HttpStatusCode.Ok) {
+      try {
+        const response = await serverLogin(username, password);
         const token = response.data.access_token;
         setToken(token);
         login(token);
-      } else {
-        setErrorLabel('Invalid username or password');
+      } catch {
+        setErrorLabel('Incorrect username or password');
       }
     }
   };

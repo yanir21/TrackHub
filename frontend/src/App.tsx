@@ -12,7 +12,7 @@ import Sidenav from './components/Sidenav/sidenav';
 import { AuthContextType } from './models/AuthContext';
 import { User, UserAuth } from './models/user';
 import Router from './router';
-import { decodeToken, getToken, setToken } from './services/auth';
+import { clearToken, decodeToken, getToken, setToken } from './services/auth';
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -36,6 +36,7 @@ const App = () => {
 
   const logout = useCallback(() => {
     setCurrentUser(undefined);
+    clearToken();
     navigate('/login');
   }, []);
 

@@ -27,7 +27,7 @@ const useGetProjects = () => {
   return {
     data,
     error,
-    loading,
+    loading
   };
 };
 
