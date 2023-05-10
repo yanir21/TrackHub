@@ -8,7 +8,7 @@ import { UserModule } from './user/user.module';
 import { ProjectModule } from './project/project.module';
 import { TagModule } from './tag/tag.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AudioTracksModule } from './audio_tracks/audio_tracks.module';
+import { TrackModule } from './track/track.module';
 
 
 const username = process.env.MONGO_USERNAME;
@@ -21,7 +21,7 @@ const password = process.env.MONGO_PASSWORD;
     AuthModule,
     ProjectModule,
     TagModule,
-    AudioTracksModule],
+    TrackModule],
   controllers: [AppController],
   providers: [AppService],
 })

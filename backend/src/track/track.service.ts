@@ -4,7 +4,7 @@ import { Upload } from "@aws-sdk/lib-storage";
 import { UploadTrackDto } from './dto/upload-track.dto';
 
 @Injectable()
-export class AudioTracksService {
+export class TrackService {
     private readonly s3Client: S3;
     private readonly bucketName = "trackhub-audiofiles";
 

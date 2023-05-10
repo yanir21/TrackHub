@@ -1,15 +1,14 @@
 import { Body, Controller, Get, Param, ParseFilePipeBuilder, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/shared/decorators/user.decorator';
-import { AudioTracksService } from './audio_tracks.service';
-import { S3 } from "@aws-sdk/client-s3"
+import { TrackService } from './track.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadTrackDto } from './dto/upload-track.dto';
 
-@Controller('audio-tracks')
+@Controller('tracks')
 @UseGuards(AuthGuard)
-export class AudioTracksController {
-  constructor(private readonly audioTracksService: AudioTracksService) {}
+export class TrackController {
+  constructor(private readonly audioTracksService: TrackService) {}
 
   @UseInterceptors(FileInterceptor('track'))
   @Post()
