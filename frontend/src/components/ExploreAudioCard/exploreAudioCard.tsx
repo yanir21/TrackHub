@@ -3,6 +3,8 @@ import { Project } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
 import classNames from 'classnames';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/src/styles.scss';
 import './exploreAudioCard.scss';
 interface ExploreAudioCardProps {
   project: Project;
@@ -42,9 +44,7 @@ export default function ExploreAudioCard({
       'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
     return (
       <div className='audio-file-container'>
-        <audio controls className='audio-file'>
-          <source src={audioFile} type='audio/mpeg' />
-        </audio>
+        <AudioPlayer src={audioFile} layout='stacked-reverse' />
       </div>
     );
   };
