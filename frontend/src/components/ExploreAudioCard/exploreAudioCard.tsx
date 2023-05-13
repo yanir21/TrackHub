@@ -57,10 +57,12 @@ export default function ExploreAudioCard({
         })}
       >
         {showAuthor && <DisplayUser displayName={project.author.displayName} />}
+      </div>
+      <div className='audio-card-second-column'>
         <SongName />
         <SongDescription />
       </div>
-      <div className='audio-card-second-column'>
+      <div className='audio-card-third-column'>
         <AudioFile />
         <div className='tags'>
           {project.tags.map((tag) => (

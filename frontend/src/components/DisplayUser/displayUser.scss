@@ -1,15 +1,17 @@
 @import "src/consts.scss";
 .display-user-container {
+    margin-left: 2rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: left;
+    justify-items: center;
     align-items: center;
 
     .display-name {
+        margin-top: 0.5rem;
             font-size: 1.3rem;
             font-weight: lighter;
             color: $off-white;
-            margin-left: 15px;
     }
 }

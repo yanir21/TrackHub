@@ -1,78 +1,74 @@
 @import '/src/consts.scss';
 
-$container-padding-x: 0rem;
-$container-padding-y: 1.8rem;
 
-$container-margin-x: 3rem;
-$container-margin-y: 2rem;
-
-$container-width: calc(
-  100% - #{$container-padding-x}* 2 - #{$container-margin-x}* 2
-);
 
 .audio-card-container {
   text-align: left;
   justify-content: space-between;
   display: flex;
-  width: $container-width;
+  width: $audio-card-container-width;
   border-radius: 6px;
-  padding: $container-padding-y $container-padding-x;
-  margin: $container-margin-y $container-margin-x;
+  padding: $audio-card-container-padding-y $audio-card-container-padding-x;
+  margin: $audio-card-container-margin-y $audio-card-container-margin-x;
   align-items: center;
   height: 5rem;
   background-color: $secondary;
-}
 
-.audio-card-first-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-
-  &.author-displayed {
-    margin-left: 2rem;
+  .audio-card-first-column {
+    display: flex;
   }
-  flex: 2.5;
-}
-.audio-card-second-column {
-  flex-direction: column;
-  flex: 4;
-  margin-right: 2rem;
-}
 
-.song-name {
-  margin-top: -0.75rem;
-  display: flex;
-  margin-left: 4rem;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
+  .audio-card-second-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
 
-.song-description {
-  display: flex;
-  margin-left: 4rem;
-  color: $third;
-}
+    &.author-displayed {
+      margin-left: 2rem;
+    }
+    flex: 2.5;
+  }
+  .audio-card-third-column {
+    flex-direction: column;
+    flex: 4;
+    margin-right: 2rem;
+  }
 
-.audio-file-container {
-  display: flex;
-  justify-content: center;
-}
-.audio-file {
-  width: 100%;
-}
+  .song-name {
+    margin-top: -0.75rem;
+    display: flex;
+    margin-left: 4rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
 
-.read-more {
-  background: none;
-  border: none;
-  color: $primary;
-  cursor: pointer;
-  font-size: inherit;
-  text-decoration: underline;
-  white-space: nowrap;
-}
+  .song-description {
+    display: flex;
+    margin-left: 4rem;
+    color: $third;
+  }
 
-.tags {
-  display: flex;
-  justify-content: end;
-  flex: 1;
+  .audio-file-container {
+    display: flex;
+    justify-content: center;
+  }
+  .audio-file {
+    width: 100%;
+  }
+
+  .read-more {
+    background: none;
+    border: none;
+    color: $primary;
+    cursor: pointer;
+    font-size: inherit;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  .tags {
+    display: flex;
+    justify-content: end;
+    flex: 1;
+  }
 }

@@ -1,7 +1,6 @@
 @import '/src/consts.scss';
 
 button{
-
 font-family: Roboto, sans-serif;
 font-weight: 0;
 font-size: 14px;
@@ -17,9 +16,10 @@ flex-direction: row;
 align-items: center;
 font-weight: bold;
 padding: 1rem 1rem;
-
 cursor: pointer;
+
     &:hover {
+        cursor: auto;
         transition : 1000ms;
         padding: 1.2rem 1.2rem;
         transform : translateY(-0px);

@@ -21,8 +21,7 @@
     color: $off-white;
 
     &:hover {
-        color: $third;
-        background-color: $off-white;
+        opacity: 0.9;
     }
 }
 
@@ -30,8 +29,8 @@
     color: $third;
     background-color: $off-white;
        &:hover {
-        background-color: $primary;
-        color: $off-white;
+                opacity: 0.9;
+
     }
 }
 

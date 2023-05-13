@@ -4,8 +4,21 @@ import './newProjectTag.scss';
 
 interface ProjectTagProps {
   tag: Tag;
+  isClicked: boolean;
+  onClick: () => void;
 }
 
-export default function NewProjectTag({ tag }: ProjectTagProps) {
-  return <div className='new-project-tag'>{tag.name}</div>;
+export default function NewProjectTag({
+  tag,
+  isClicked,
+  onClick
+}: ProjectTagProps) {
+  return (
+    <div
+      className={isClicked ? 'selected-new-project-tag' : 'new-project-tag'}
+      onClick={onClick}
+    >
+      {tag.name}
+    </div>
+  );
 }
