@@ -76,3 +76,12 @@ $container-width: calc(
   justify-content: end;
   flex: 1;
 }
+
+.rhap_container {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.rhap_time {
+  color: $off-white;
+}
