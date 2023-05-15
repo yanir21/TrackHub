@@ -13,5 +13,25 @@
   .track-container {
     display: flex;
     width: 80%;
+    align-items: center;
+    transition: 0.2s;
+    &.disabled {
+      filter: brightness(0.7);
+    }
+  }
+
+  .checkbox-round {
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    outline: none;
+    &:checked {
+      background-color: $primary;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './songPage.scss';
 import WaveformPlayer from '../../components/waveformPlayer/waveformPlayer';
+import classNames from 'classnames';
 
 const track1 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track1.mp3';
 const track2 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
@@ -31,9 +32,15 @@ const SongPage = () => {
         {isPlaying ? 'Pause' : 'Play'}
       </div>
       {[track1, track2, track3].map((track, index) => (
-        <div className='track-container' key={index}>
+        <div
+          className={classNames('track-container', {
+            disabled: !selectedTracks.includes(track)
+          })}
+          key={index}
+        >
           <input
             type='checkbox'
+            className='checkbox-round'
             onChange={(e) => handleTrackChange(e.target.checked, track)}
             title='nadavi'
             checked={selectedTracks.includes(track)}
