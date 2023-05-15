@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import './waveformPlayer.scss';
 
-const WaveformPlayer = () => {
+interface WaveformPlayerProps {
+  url: string;
+  id: number;
+  isPlaying: boolean;
+}
+
+const WaveformPlayer = (props: WaveformPlayerProps) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [waveform, setWaveform] = useState<WaveSurfer>();
-  useEffect(() => {
-    const track = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
 
+  useEffect(() => {
     const waveform = WaveSurfer.create({
       barWidth: 3,
       cursorWidth: 1,
-      container: '#waveform',
+      container: `#waveform-${props.id}`,
       backend: 'WebAudio',
       height: 80,
       progressColor: '#2D5BFF',
@@ -21,22 +26,22 @@ const WaveformPlayer = () => {
       cursorColor: 'transparent'
     });
 
-    waveform.load(track);
+    waveform.load(props.url);
     setWaveform(waveform);
   }, []);
 
-  const handlePlay = () => {
-    setPlaying(!playing);
-    waveform!.playPause();
-  };
-
-  const url = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
+  useEffect(() => {
+    if (props.isPlaying && waveform) {
+      waveform!.play();
+    } else if (waveform) {
+      waveform.pause();
+    }
+  }, [props.isPlaying]);
 
   return (
     <div className='waveform-container'>
-      <div onClick={handlePlay}>{!playing ? 'Play' : 'Pause'}</div>
-      <div id='waveform' className='wave' />
-      <audio id='track' src={url} />
+      <div id={`waveform-${props.id}`} className='wave' />
+      <audio id={`track-${props.id}`} src={props.url} />
     </div>
   );
 };

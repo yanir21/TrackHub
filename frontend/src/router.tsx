@@ -4,6 +4,7 @@ import RegisterPage from './views/registerPage/registerPage';
 import ExplorePage from './views/explorePage/explorePage';
 import ProfilePage from './views/profilePage/profilePage';
 import NewProjectPage from './views/newProjectPage/newProjectPage';
+import SongPage from './views/songPage/songPage';
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/register' element={<RegisterPage />} />
       <Route path='/newProject' element={<NewProjectPage />} />
+      <Route path='/song' element={<SongPage />} />
     </Routes>
   );
 };

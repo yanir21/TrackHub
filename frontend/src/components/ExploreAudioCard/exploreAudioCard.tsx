@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/src/styles.scss';
 import './exploreAudioCard.scss';
+import { useNavigate } from 'react-router';
 interface ExploreAudioCardProps {
   project: Project;
   showAuthor?: boolean;
@@ -16,6 +17,7 @@ export default function ExploreAudioCard({
   showAuthor = true
 }: ExploreAudioCardProps) {
   const [readMoreClicked, setReadMoreClicked] = useState(false);
+  const navigate = useNavigate();
 
   const SongName = () => <div className='song-name'>{project.title}</div>;
 
@@ -50,7 +52,7 @@ export default function ExploreAudioCard({
   };
 
   return (
-    <div className='audio-card-container'>
+    <div className='audio-card-container' onClick={() => navigate('/song')}>
       <div
         className={classNames('audio-card-first-column', {
           'author-displayed': showAuthor

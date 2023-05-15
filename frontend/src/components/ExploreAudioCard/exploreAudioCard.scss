@@ -1,7 +1,5 @@
 @import '/src/consts.scss';
 
-
-
 .audio-card-container {
   text-align: left;
   justify-content: space-between;
@@ -13,6 +11,11 @@
   align-items: center;
   height: 5rem;
   background-color: $secondary;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.9);
+    transition: 0.2s;
+  }
 
   .audio-card-first-column {
     display: flex;

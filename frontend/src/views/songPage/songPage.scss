@@ -1,0 +1,17 @@
+@import 'src/consts.scss';
+
+.song-page {
+  padding: 20px 30px;
+
+  .section-header {
+    font-size: 1.4rem;
+    color: $fourth;
+    font-weight: bold;
+    text-align: start;
+  }
+
+  .track-container {
+    display: flex;
+    width: 80%;
+  }
+}
