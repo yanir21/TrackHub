@@ -1,33 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Project } from '../models/project';
 import http from '../services/http';
+import useSWR from 'swr';
 
 const useGetProjects = () => {
-  const [data, setData] = useState<Project[]>([]);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await http.get('/projects');
-
-      setData(response.data);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setLoading(false);
-    }
+  const fetcher = async (url: string) => {
+    const res = await http.get(url);
+    return res.data as Promise<Project[]>;
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, error, isLoading } = useSWR<Project[]>('/projects', fetcher);
 
   return {
-    data,
+    data: data || [],
     error,
-    loading
+    loading: isLoading
   };
 };
 

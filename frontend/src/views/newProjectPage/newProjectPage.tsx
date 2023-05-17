@@ -14,16 +14,16 @@ import NewAudioCard from '../../components/newAudioCard/newAudioCard';
 import { FormProvider, useForm } from 'react-hook-form';
 import { log } from 'console';
 import Tags from './Tags/tags';
+import http from '../../services/http';
 
 const NewProjectPage = () => {
   const { currentUser } = useContext(AuthContext) as AuthContextType;
-  const { data: ownedProjects } = useGetProjects();
 
   const methods = useForm();
 
-  const [songName, setSongName] = React.useState<string>('');
   const [masterTrack, setMasterTrack] = React.useState<File | null>(null);
-  const [songDescription, setSongDescription] = React.useState<string>('');
+
+  const { data: tags } = useGetTags();
 
   const handleUpload = (file: File) => {
     if (file) {
@@ -33,14 +33,30 @@ const NewProjectPage = () => {
     }
   };
 
-  const uploadPost = () => {
-    const masterSong = masterTrack;
-    const songName = methods.watch('songName');
-    const songDescription = methods.watch('songDescription');
-    console.log(masterSong, songName, songDescription);
+  const getSelectedTags = () => {
+    return (
+      tags?.filter((tag) => methods.watch(`tags[${tag._id}].isClicked`)) || []
+    );
   };
 
-  const onSubmit = (data: any) => uploadPost();
+  const uploadProject = () => {
+    if (tags) {
+      const masterSong = masterTrack;
+      const title = methods.watch('songName');
+      const description = methods.watch('songDescription');
+      console.log(getSelectedTags(), masterSong, title, description);
+      http.post('/projects', {
+        masterSong,
+        title,
+        description,
+        tags: getSelectedTags()
+      });
+    }
+  };
+
+  const onSubmit = (data: any) => {
+    uploadProject();
+  };
 
   return (
     <div className='new-project-page'>
@@ -57,11 +73,7 @@ const NewProjectPage = () => {
             ) : (
               <div className='new-audio-card-wrapper'>
                 <div className='new-audio-card'>
-                  <NewAudioCard
-                    masterTrack={masterTrack}
-                    songNameChanged={setSongName}
-                    songDescriptionChanged={setSongDescription}
-                  />
+                  <NewAudioCard masterTrack={masterTrack} />
                 </div>
               </div>
             )}
@@ -72,23 +84,7 @@ const NewProjectPage = () => {
             <div className='tags-wrapper'>
               <Tags />
             </div>
-            <Button
-              isSubmitButton={true}
-              // onClick={() => {
-              //   alert(
-              //     'song name: ' +
-              //       songName +
-              //       ' song description: ' +
-              //       songDescription +
-              //       ' tags: ' +
-              //       selectedTags +
-              //       ' master track: ' +
-              //       masterTrack?.name
-              //   );
-              // }}
-            >
-              Send To Collab
-            </Button>
+            <Button isSubmitButton={true}>Send To Collab</Button>
           </form>
         </FormProvider>
       </div>

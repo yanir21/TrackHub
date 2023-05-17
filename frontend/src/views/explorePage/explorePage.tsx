@@ -11,9 +11,11 @@ const ExplorePage = () => {
 
   return (
     <div className='explore-page-container'>
-      {data.map((project) => (
-        <ExploreAudioCard project={project} key={project._id} />
-      ))}
+      <div className='explore-audio-cards-container'>
+        {data.map((project) => (
+          <ExploreAudioCard project={project} key={project._id} />
+        ))}
+      </div>
     </div>
   );
 };

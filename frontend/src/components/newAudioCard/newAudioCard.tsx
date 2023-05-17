@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AudioPlayer from 'react-h5-audio-player';
 import { Project } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
@@ -8,15 +9,8 @@ import SongNameInput from './components/songNameInput/songNameInput';
 import SongDescriptionInput from './components/songDescriptionInput/songDescriptionInput';
 interface NewAudioCardProps {
   masterTrack: File;
-  songNameChanged: (value: string) => void;
-  songDescriptionChanged: (value: string) => void;
 }
-
-export default function NewAudioCard({
-  masterTrack,
-  songNameChanged,
-  songDescriptionChanged
-}: NewAudioCardProps) {
+const NewAudioCard = React.memo(({ masterTrack }: NewAudioCardProps) => {
   const SongName = () => (
     <div className='song-name'>
       <SongNameInput />
@@ -32,9 +26,10 @@ export default function NewAudioCard({
   const AudioFile = () => {
     return (
       <div className='audio-file-container'>
-        <audio controls className='audio-file'>
-          <source src={URL.createObjectURL(masterTrack)} type='audio/mpeg' />
-        </audio>
+        <AudioPlayer
+          src={URL.createObjectURL(masterTrack)}
+          layout='stacked-reverse'
+        />
       </div>
     );
   };
@@ -50,4 +45,6 @@ export default function NewAudioCard({
       </div>
     </div>
   );
-}
+});
+
+export default NewAudioCard;

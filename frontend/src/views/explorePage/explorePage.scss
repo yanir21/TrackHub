@@ -1,8 +1,13 @@
 .explore-page-container {
     display: flex;
     flex-direction: column;
-    // width: 100%;
+    width: 100%;
+    align-items: center;
     // height: 100%;
     // padding: 0 20px;
+}
+
+.explore-audio-cards-container {
+    width: 100%;
 }
 
