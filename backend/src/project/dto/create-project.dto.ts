@@ -12,4 +12,8 @@ export class CreateProjectDto {
 
     @IsArray()
     tags: string[];
+
+    @IsString()
+    @IsNotEmpty()
+    trackKey: string;
 }

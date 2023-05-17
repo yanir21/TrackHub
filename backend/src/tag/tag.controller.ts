@@ -13,7 +13,7 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@Controller('tag')
+@Controller('tags')
 @UseGuards(AuthGuard)
 export class TagController {
     constructor(private readonly tagService: TagService) {}
