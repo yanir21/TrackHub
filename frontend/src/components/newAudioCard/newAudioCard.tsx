@@ -26,6 +26,7 @@ const NewAudioCard = React.memo(({ masterTrack }: NewAudioCardProps) => {
   const AudioFile = () => {
     return (
       <div className='audio-file-container'>
+        u{' '}
         <AudioPlayer
           src={URL.createObjectURL(masterTrack)}
           layout='stacked-reverse'
