@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory, } from "@nestjs/mongoose";
 import * as mongoose from 'mongoose';
+import { Project } from "src/project/project.schema";
 import { Track } from "src/track/track.schema";
 import { User } from "src/user/user.schema";
 import { SuggestionStatus } from "./suggestion.entity";
@@ -20,5 +21,8 @@ export class Suggestion {
 
   @Prop()
   status: SuggestionStatus;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Project' })
+  project: Project;
 }
 export const SuggestionSchema = SchemaFactory.createForClass(Suggestion);

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, UploadedFile, ParseFilePipeBuilder, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, UploadedFile, ParseFilePipeBuilder, UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
 import { SuggestionService } from './suggestion.service';
 import { CreateSuggestionDto } from './dto/create-suggestion.dto';
 import { UpdateSuggestionStatusDto } from './dto/update-suggestion-status.dto';
@@ -48,18 +48,21 @@ export class SuggestionController {
   }
 
   @Put('status/:id')
-  async update(@Param('id') id: string, @Body() updateSuggestionStatusDto: UpdateSuggestionStatusDto) {
-    return await this.suggestionService.updateStatus(id, updateSuggestionStatusDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateSuggestionStatusDto: UpdateSuggestionStatusDto,
+    @Username() username: string) {
+    if (await this.isAllowedToUpdateStatus(id, username)) {
+      return await this.suggestionService.updateStatus(id, updateSuggestionStatusDto);
+    } else {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
   }
 
-
-  // @Put(':id')
-  // update(@Param('id') id: string, @Body() updateSuggestionDto: UpdateSuggestionDto) {
-  //   return this.suggestionService.update(+id, updateSuggestionDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.suggestionService.remove(+id);
-  // }
+  private async isAllowedToUpdateStatus(
+    id: string,
+    username: string): Promise<boolean> {
+      const suggestion = await this.suggestionService.findOne(id);
+      return (await this.projectService.findOne(suggestion.project._id)).author.username === username;
+  }
 }

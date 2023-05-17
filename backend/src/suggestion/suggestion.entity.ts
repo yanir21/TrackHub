@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { IProject } from "src/project/project.entity";
 import { ITrack } from "src/track/track.entity";
 import { IUser } from "src/user/user.interface";
 
@@ -14,5 +15,6 @@ export interface ISuggestion extends Document {
     description: string,
     creationDate: Date,
     track: ITrack,
-    status: SuggestionStatus
+    status: SuggestionStatus,
+    project: IProject
 }

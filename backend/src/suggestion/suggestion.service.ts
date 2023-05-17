@@ -18,17 +18,21 @@ export class SuggestionService {
       creationDate: new Date(),
       status: SuggestionStatus.PENDING,
       track: trackId,
-      description: createSuggestionDto.description
+      description: createSuggestionDto.description,
+      project: createSuggestionDto.projectId
     });
 
     return await newSuggestion.save();
+  }
+
+  async findOne(id: string) {
+    return this.suggestionModel.findById(id);
   }
 
   async findAllOfUser(suggesterId: string) {
     return await this.suggestionModel.find({suggester: suggesterId}).populate("suggester track");
   }
 
-  // TODO: allow only project owner to update status
   async updateStatus(id: string, updateSuggestionStatusDto: UpdateSuggestionStatusDto) {
     return await this.suggestionModel.findByIdAndUpdate(
       id,
@@ -36,11 +40,4 @@ export class SuggestionService {
       { new: true }
     );
   }
-  // update(id: number, updateSuggestionDto: UpdateSuggestionDto) {
-  //   return `This action updates a #${id} suggestion`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} suggestion`;
-  // }
 }

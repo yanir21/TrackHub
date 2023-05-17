@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { isValidObjectId, Model } from 'mongoose';
+import mongoose, { isValidObjectId, Model } from 'mongoose';
 import { ISuggestion } from 'src/suggestion/suggestion.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -39,6 +39,10 @@ export class ProjectService {
 
   async findOne(id: string) {
     return await this.projectModel.findById(id).populate("author tags masterTrack suggestions");
+  }
+
+  async findOneBySuggestionId(suggestionId: string): Promise<IProject> {
+    return await this.projectModel.where('suggestions._id').in([suggestionId])[0];
   }
 
   async update(id: string, updateProjectDto: UpdateProjectDto) {
