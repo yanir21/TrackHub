@@ -9,6 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { TagModule } from './tag/tag.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TrackModule } from './track/track.module';
+import { SuggestionModule } from './suggestion/suggestion.module';
 
 
 const username = process.env.MONGO_USERNAME;
@@ -21,7 +22,8 @@ const password = process.env.MONGO_PASSWORD;
     AuthModule,
     ProjectModule,
     TagModule,
-    TrackModule],
+    TrackModule,
+    SuggestionModule],
   controllers: [AppController],
   providers: [AppService],
 })
