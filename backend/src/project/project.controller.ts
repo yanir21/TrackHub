@@ -11,6 +11,7 @@ import {
     ParseFilePipeBuilder,
     UseInterceptors,
 } from '@nestjs/common';
+import uniqid from 'uniqid';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -44,7 +45,7 @@ export class ProjectController {
     ) {
         const author = await this.userService.getUserByUsername(username);
         const uploadTrackDto: UploadTrackDto = {
-            key: createProjectDto.trackKey
+            key: uniqid()
         };
         const track = await this.trackService.upload(uploadTrackDto, trackFile.buffer.toString());
         return await this.projectService.create(createProjectDto, author._id, track._id);
