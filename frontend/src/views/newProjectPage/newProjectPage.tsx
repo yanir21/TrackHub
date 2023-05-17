@@ -15,13 +15,20 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { log } from 'console';
 import Tags from './Tags/tags';
 import http from '../../services/http';
+import { Tag } from '../../models/tag';
+import { useNavigate } from 'react-router-dom';
+import { CREATED } from 'http-status';
+import Loader from '../../components/Loader/loader';
 
 const NewProjectPage = () => {
+  const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext) as AuthContextType;
 
   const methods = useForm();
 
   const [masterTrack, setMasterTrack] = React.useState<File | null>(null);
+
+  const [loading, setLoading] = React.useState(false);
 
   const { data: tags } = useGetTags();
 
@@ -33,24 +40,46 @@ const NewProjectPage = () => {
     }
   };
 
-  const getSelectedTags = () => {
+  const getSelectedTagsIds = () => {
     return (
-      tags?.filter((tag) => methods.watch(`tags[${tag._id}].isClicked`)) || []
+      (tags as Tag[])
+        .filter((tag) => methods.watch(`tags[${tag._id}].isClicked`))
+        .map((tag) => tag._id) || []
     );
   };
 
-  const uploadProject = () => {
-    if (tags) {
-      const masterSong = masterTrack;
-      const title = methods.watch('songName');
-      const description = methods.watch('songDescription');
-      console.log(getSelectedTags(), masterSong, title, description);
-      http.post('/projects', {
-        masterSong,
-        title,
-        description,
-        tags: getSelectedTags()
-      });
+  const uploadProject = async () => {
+    try {
+      if (tags) {
+        const title = methods.watch('songName');
+        const description = methods.watch('songDescription');
+        console.log(getSelectedTagsIds(), masterTrack, title, description);
+        const track = masterTrack;
+        console.log('track:', track?.name);
+        setLoading(true);
+
+        const response = await http.post(
+          '/projects',
+
+          {
+            track: track,
+            title,
+            description,
+            tags: getSelectedTagsIds()
+          },
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        );
+
+        if (response.status === CREATED) {
+          navigate('/profile');
+        }
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,7 +113,10 @@ const NewProjectPage = () => {
             <div className='tags-wrapper'>
               <Tags />
             </div>
-            <Button isSubmitButton={true}>Send To Collab</Button>
+            <div className='button-wrapper'>
+              <Button isSubmitButton={true}>Send To Collab</Button>
+            </div>
+            <div className='loader-container'>{loading && <Loader />}</div>
           </form>
         </FormProvider>
       </div>

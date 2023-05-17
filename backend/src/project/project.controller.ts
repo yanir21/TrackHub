@@ -9,9 +9,8 @@ import {
     Put,
     UploadedFile,
     ParseFilePipeBuilder,
-    UseInterceptors,
+    UseInterceptors
 } from '@nestjs/common';
-import uniqid from 'uniqid';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -21,7 +20,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TrackService } from 'src/track/track.service';
 import { UploadTrackDto } from 'src/track/dto/upload-track.dto';
-
+import { v4 as uuidv4 } from 'uuid';
 @Controller('projects')
 @UseGuards(AuthGuard)
 export class ProjectController {
@@ -38,17 +37,26 @@ export class ProjectController {
         @Username() username: string,
         @UploadedFile(
             new ParseFilePipeBuilder()
-              .addFileTypeValidator({
-                fileType: 'audio/mpeg'
-              })
-              .build()) trackFile: Express.Multer.File,
+                .addFileTypeValidator({
+                    fileType: 'audio/mpeg'
+                })
+                .build()
+        )
+        trackFile: Express.Multer.File
     ) {
         const author = await this.userService.getUserByUsername(username);
         const uploadTrackDto: UploadTrackDto = {
-            key: uniqid()
+            key: uuidv4()
         };
-        const track = await this.trackService.upload(uploadTrackDto, trackFile.buffer.toString());
-        return await this.projectService.create(createProjectDto, author._id, track._id);
+        const track = await this.trackService.upload(
+            uploadTrackDto,
+            trackFile.buffer.toString()
+        );
+        return await this.projectService.create(
+            createProjectDto,
+            author._id,
+            track._id
+        );
     }
 
     @Get()

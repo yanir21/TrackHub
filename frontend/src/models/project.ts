@@ -7,4 +7,5 @@ export interface Project {
   title: string;
   description: string;
   tags: Tag[];
+  masterTrack: File;
 }

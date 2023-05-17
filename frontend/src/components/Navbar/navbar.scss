@@ -14,9 +14,9 @@
   }
 
   .navbar-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    // position: absolute;
+    // left: 10%;
+    // transform: translateX(-50%);
   }
 
   .navbar-left {
@@ -24,6 +24,7 @@
   }
 
   .navbar-right {
+    margin-right: 2rem;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -45,4 +46,18 @@
     margin-right: 20px;
     margin-left: 8px;
   }
+  .logo {
+    width: 280px;
+    height: 70px;
+    margin-right: 20px;
+  }
+
+  .firstLogoWord {
+    color:$primary;
+    font-size: 1.5rem ;
+  }
+  .secondLogoWord {
+    font-size: 1.5rem;
+    font-weight: 600; 
+   }
 }

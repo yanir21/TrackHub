@@ -8,7 +8,7 @@ export default function Tags() {
   const { data: tags, error: tagsError, loading: tagsLoading } = useGetTags();
   const { control } = useFormContext();
   if (tagsError) {
-    return <div> error :( </div>;
+    return <div> error, try again later </div>;
   }
 
   if (tagsLoading) {
