@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
-import './songPage.scss';
+import './projectPage.scss';
 import WaveformPlayer from '../../components/waveformPlayer/waveformPlayer';
 import classNames from 'classnames';
+import { Project } from '../../models/project';
 
 const track1 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track1.mp3';
 const track2 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
 const track3 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track3.mp3';
 
-const SongPage = () => {
+const project: Project = {
+  _id: 'eliko',
+  author: { username: 'mazi', displayName: 'Mazi Cohen', id: '1' },
+  description:
+    'This is a great song I started a couple weeks ago, contributers are welcome!',
+  masterTrack: 'abc',
+  suggestions: ['abc', 'cde', 'efg'],
+  title: 'My Humble Demise',
+  tags: [
+    { _id: '1', name: 'Hip Hop' },
+    { _id: '2', name: 'Electronic' }
+  ]
+};
+
+const ProjectPage = () => {
   const allTracks = [track1, track2, track3];
   const [selectedTracks, setSelectedTracks] = useState<string[]>(allTracks);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -56,4 +71,4 @@ const SongPage = () => {
   );
 };
 
-export default SongPage;
+export default ProjectPage;

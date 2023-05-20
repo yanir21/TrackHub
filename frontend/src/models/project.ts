@@ -1,11 +1,22 @@
 import { Tag } from './tag';
-import { User } from './user';
+import { UserAuth } from './user';
 
-export interface Project {
+export interface ProjectCreate {
   _id: string;
-  author: User;
+  author: UserAuth;
   title: string;
   description: string;
   tags: Tag[];
   masterTrack: File;
+  suggestions: string[];
+}
+
+export interface Project {
+  _id: string;
+  author: UserAuth;
+  title: string;
+  description: string;
+  tags: Tag[];
+  masterTrack: string;
+  suggestions: string[];
 }

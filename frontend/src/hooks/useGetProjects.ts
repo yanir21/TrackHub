@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Project } from '../models/project';
+import { ProjectCreate } from '../models/project';
 import http from '../services/http';
 import useSWR from 'swr';
 
 const useGetProjects = () => {
   const fetcher = async (url: string) => {
     const res = await http.get(url);
-    return res.data as Promise<Project[]>;
+    return res.data as Promise<ProjectCreate[]>;
   };
 
-  const { data, error, isLoading } = useSWR<Project[]>('/projects', fetcher);
+  const { data, error, isLoading } = useSWR<ProjectCreate[]>(
+    '/projects',
+    fetcher
+  );
 
   return {
     data: data || [],

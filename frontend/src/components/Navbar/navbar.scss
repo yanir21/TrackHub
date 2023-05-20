@@ -21,6 +21,7 @@
 
   .navbar-left {
     margin-left: 2rem;
+    font-size: 1.8rem;
   }
 
   .navbar-right {
@@ -28,10 +29,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: 0.2s;
-    &:hover {
-      filter: brightness(0.8);
-    }
   }
 
   .logout-icon {
@@ -52,12 +49,19 @@
     margin-right: 20px;
   }
 
+  .logout-container {
+    display: flex;
+    align-items: center;
+    transition: 0.2s;
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
   .firstLogoWord {
-    color:$primary;
-    font-size: 1.5rem ;
+    color: $primary;
   }
   .secondLogoWord {
-    font-size: 1.5rem;
-    font-weight: 600; 
-   }
+    font-weight: 600;
+  }
 }

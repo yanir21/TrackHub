@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Project } from '../../models/project';
+import { ProjectCreate } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ import 'react-h5-audio-player/src/styles.scss';
 import './exploreAudioCard.scss';
 import { useNavigate } from 'react-router';
 interface ExploreAudioCardProps {
-  project: Project;
+  project: ProjectCreate;
   showAuthor?: boolean;
 }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Project } from '../models/project';
+import { ProjectCreate } from '../models/project';
 import http from '../services/http';
 import useSWR from 'swr';
 import { Tag } from '../models/tag';

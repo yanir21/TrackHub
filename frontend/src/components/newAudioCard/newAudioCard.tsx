@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
-import { Project } from '../../models/project';
+import { ProjectCreate } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
 import classNames from 'classnames';

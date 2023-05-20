@@ -12,7 +12,6 @@ import Button from '../../components/Button/button';
 import UploadAudioButton from './UploadAudioButton/uploadAudioButton';
 import NewAudioCard from '../../components/newAudioCard/newAudioCard';
 import { FormProvider, useForm } from 'react-hook-form';
-import { log } from 'console';
 import Tags from './Tags/tags';
 import http from '../../services/http';
 import { Tag } from '../../models/tag';
@@ -53,9 +52,7 @@ const NewProjectPage = () => {
       if (tags) {
         const title = methods.watch('songName');
         const description = methods.watch('songDescription');
-        console.log(getSelectedTagsIds(), masterTrack, title, description);
         const track = masterTrack;
-        console.log('track:', track?.name);
         setLoading(true);
 
         const response = await http.post(
