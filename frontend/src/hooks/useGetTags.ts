@@ -10,7 +10,7 @@ const useGetTags = () => {
     return res.data as Promise<Tag[]>;
   };
 
-  const { data, error, isLoading } = useSWR<Tag[]>('/tag', fetcher);
+  const { data, error, isLoading } = useSWR<Tag[]>('/tags', fetcher);
 
   return {
     data,

@@ -18,7 +18,7 @@ export default function NewProjectTag({
       className={isClicked ? 'selected-new-project-tag' : 'new-project-tag'}
       onClick={onClick}
     >
-      {tag.name}
+      {tag?.name}
     </div>
   );
 }

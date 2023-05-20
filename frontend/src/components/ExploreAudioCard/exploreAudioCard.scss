@@ -19,10 +19,12 @@
 
   .audio-card-first-column {
     display: flex;
+    flex: 1;
   }
 
   .audio-card-second-column {
     display: flex;
+    flex:2;
     flex-direction: column;
     justify-content: left;
 
@@ -33,7 +35,7 @@
   }
   .audio-card-third-column {
     flex-direction: column;
-    flex: 4;
+    flex: 6;
     margin-right: 2rem;
   }
 

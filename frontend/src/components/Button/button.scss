@@ -19,7 +19,6 @@ button {
   cursor: pointer;
 
   &:hover {
-    cursor: auto;
     transition: 0.2s;
     background-color: $off-white;
     color: $secondary;

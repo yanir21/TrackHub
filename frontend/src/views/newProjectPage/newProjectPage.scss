@@ -71,4 +71,15 @@
   .new-audio-card {
     width: 50%;
   }
+
+  .loader-container {
+    margin: 2rem;
+    display: flex;
+     justify-content: center;
+  }
+  .button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 }

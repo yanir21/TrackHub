@@ -3,7 +3,8 @@
   display: flex;
 
   .display-name {
-    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
     font-size: 1.3rem;
     font-weight: lighter;
     color: $off-white;

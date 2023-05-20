@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { isValidObjectId, Model } from 'mongoose';
+import mongoose, { isValidObjectId, Model } from 'mongoose';
+import { ISuggestion } from 'src/suggestion/suggestion.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { IProject } from './project.entity';
@@ -9,23 +10,39 @@ import { IProject } from './project.entity';
 export class ProjectService {
   constructor(@InjectModel("Project") private projectModel: Model<IProject>) {}
 
-  async create(createProjectDto: CreateProjectDto, author: string) {
+  async create(createProjectDto: CreateProjectDto, author: string, trackId: string) {
     createProjectDto.tags.forEach(tag => {
       if (!isValidObjectId(tag)) {
         throw new NotFoundException(`Tag ${tag} not found`);
       }
     })
 
-    const newProject = new this.projectModel({...createProjectDto, author});
-    return newProject.save();
+    const newProject = new this.projectModel({
+      author,
+      masterTrack: trackId,
+      suggestions: [],
+      ...createProjectDto
+    });
+    return await newProject.save();
+  }
+
+  async addSuggestion(projectId: string, suggestion: ISuggestion) {
+    const project = await this.findOne(projectId);
+    project.suggestions.push(suggestion);
+    
+    return await project.save();
   }
 
   async findAll() {
-    return await this.projectModel.find().populate("author tags");
+    return await this.projectModel.find().populate("author tags masterTrack suggestions");
   }
 
   async findOne(id: string) {
-    return await this.projectModel.findById(id).populate("author tags");
+    return await this.projectModel.findById(id).populate("author tags masterTrack suggestions");
+  }
+
+  async findOneBySuggestionId(suggestionId: string): Promise<IProject> {
+    return await this.projectModel.where('suggestions._id').in([suggestionId])[0];
   }
 
   async update(id: string, updateProjectDto: UpdateProjectDto) {
