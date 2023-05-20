@@ -55,4 +55,27 @@
     margin: 12px 0;
     text-align: start;
   }
+
+  .master-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .play-button {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .control {
+    background-color: $third;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    cursor: pointer;
+    width: 90px;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { KeyboardEvent, useEffect, useState } from 'react';
 import './projectPage.scss';
 import WaveformPlayer from '../../components/waveformPlayer/waveformPlayer';
 import classNames from 'classnames';
@@ -7,6 +7,8 @@ import ProjectTag from '../../components/ProjectTag/projectTag';
 import DisplayUser from '../../components/DisplayUser/displayUser';
 import { AudioFile } from '../../components/ExploreAudioCard/exploreAudioCard';
 import TrackRow from '../../components/TrackRow/trackRow';
+import { BsFillPauseFill, BsFillPlayFill } from 'react-icons/bs';
+import { useEventListener } from '../../hooks';
 
 const track1 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track1.mp3';
 const track2 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
@@ -29,8 +31,16 @@ const length = '1:24';
 
 const ProjectPage = () => {
   const allTracks = [track1, track2, track3];
-  const [selectedTracks, setSelectedTracks] = useState<string[]>(allTracks);
+  const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const handleSpacebarPress = (e: any) => {
+    if (e.key === ' ') {
+      setIsPlaying((isPlaying) => !isPlaying);
+    }
+  };
+
+  useEventListener('keydown', handleSpacebarPress);
 
   const handleTrackChange = (track: string) => {
     if (!selectedTracks.includes(track)) {
@@ -63,7 +73,23 @@ const ProjectPage = () => {
       </div>
       <div className='section-header'>Description</div>
       <div className='project-description'>{project.description}</div>
-      <div className='section-header'>Master Track</div>
+      <div className='master-container'>
+        <div className='section-header'>Master Track</div>
+        <span
+          className='play-button'
+          onClick={setIsPlaying.bind(this, !isPlaying)}
+        >
+          {isPlaying ? (
+            <span className='control'>
+              <BsFillPauseFill /> Pause
+            </span>
+          ) : (
+            <span className='control'>
+              <BsFillPlayFill /> Play
+            </span>
+          )}
+        </span>
+      </div>
       <TrackRow
         isDisabled={false}
         id={6969}
