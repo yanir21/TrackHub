@@ -39,7 +39,7 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
   }, [props.isPlaying]);
 
   return (
-    <div className='waveform-container'>
+    <div className='wave-container'>
       <div id={`waveform-${props.id}`} className='wave' />
       <audio id={`track-${props.id}`} src={props.url} />
     </div>

@@ -7,6 +7,18 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/src/styles.scss';
 import './exploreAudioCard.scss';
 import { useNavigate } from 'react-router';
+
+export const AudioFile = () => {
+  // get audio from internet for mock
+  const audioFile =
+    'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+  return (
+    <div className='audio-file-container'>
+      <AudioPlayer src={audioFile} layout='stacked-reverse' />
+    </div>
+  );
+};
+
 interface ExploreAudioCardProps {
   project: ProjectCreate;
   showAuthor?: boolean;

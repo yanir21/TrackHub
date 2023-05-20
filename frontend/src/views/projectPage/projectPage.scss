@@ -10,16 +10,6 @@
     text-align: start;
   }
 
-  .track-container {
-    display: flex;
-    width: 80%;
-    align-items: center;
-    transition: 0.2s;
-    &.disabled {
-      filter: brightness(0.7);
-    }
-  }
-
   .checkbox-round {
     cursor: pointer;
     width: 1em;
@@ -33,5 +23,36 @@
     &:checked {
       background-color: $primary;
     }
+  }
+
+  .project-top-line {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .top-left {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .project-length {
+    margin-left: 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .project-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .middle-section {
+    margin: 12px 0;
+  }
+
+  .project-description {
+    margin: 12px 0;
+    text-align: start;
   }
 }

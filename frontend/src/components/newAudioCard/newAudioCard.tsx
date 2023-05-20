@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
-import { ProjectCreate } from '../../models/project';
-import DisplayUser from '../DisplayUser/displayUser';
-import ProjectTag from '../ProjectTag/projectTag';
 import classNames from 'classnames';
 import './newAudioCard.scss';
 import SongNameInput from './components/songNameInput/songNameInput';
@@ -26,7 +23,6 @@ const NewAudioCard = React.memo(({ masterTrack }: NewAudioCardProps) => {
   const AudioFile = () => {
     return (
       <div className='audio-file-container'>
-        u{' '}
         <AudioPlayer
           src={URL.createObjectURL(masterTrack)}
           layout='stacked-reverse'
