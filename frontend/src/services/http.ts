@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './auth';
 
 const http = axios.create({
-  baseURL: 'https://trackhubio.vercel.app/',
+  baseURL: 'http://trackhubio.vercel.app/',
 });
 
 http.interceptors.request.use(async (config) => {
