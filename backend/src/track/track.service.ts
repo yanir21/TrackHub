@@ -5,7 +5,7 @@ import { UploadTrackDto } from './dto/upload-track.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ITrack } from './track.entity';
-import { Track } from './track.schema';
+
 
 @Injectable()
 export class TrackService {
@@ -44,14 +44,16 @@ export class TrackService {
     }
     
 
-    async getTrack(key: string) {
+    async getTrackFileById(id: string): Promise<string> {
+        const track: ITrack = await this.trackModel.findById(id);
+
         const params = {
-            Key: key,
+            Key: track.trackKey,
             Bucket: this.bucketName
         }
 
-        const track = await this.s3Client.getObject(params);
+        const trackFile = await this.s3Client.getObject(params);
 
-        return track.Body.transformToString("utf-8");
+        return await trackFile.Body.transformToString("utf-8");
     }
 }

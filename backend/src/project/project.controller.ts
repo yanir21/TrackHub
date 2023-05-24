@@ -22,6 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { TrackService } from 'src/track/track.service';
 import { UploadTrackDto } from 'src/track/dto/upload-track.dto';
 
+
 @Controller('projects')
 @UseGuards(AuthGuard)
 export class ProjectController {
@@ -52,13 +53,46 @@ export class ProjectController {
     }
 
     @Get()
+    // TODO: add skip and limit
     async findAll() {
-        return await this.projectService.findAll();
+        const projects = await this.projectService.findAll();
+        return Promise.all(projects.map(async project => {
+            // TODO: remove this if clause, when the data is correct
+            if (project.masterTrack) {
+                project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
+            }
+            return project;
+        }));
     }
+
+    @Get('user/:id')
+    // TODO: add skip and limit
+    async findAllOfUser(@Param('id') userId: string) {
+      const projects = await this.projectService.findAllOfUser(userId);
+
+      return Promise.all(projects.map(async project => {
+        // TODO: remove this if clause, when the data is correct
+        if (project.masterTrack) {
+            project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
+        }
+        return project;
+    }));
+    }
+  
 
     @Get(':id')
     async findOne(@Param('id') id: string) {
-        return await this.projectService.findOne(id);
+        const project = await this.projectService.findOne(id);
+        const trackFile = await this.trackService.getTrackFileById(project.masterTrack._id);
+        project.masterTrack.file = trackFile;
+        project.suggestions = await Promise.all(project.suggestions.map(async suggestion => {
+            // TODO: remove this if clause, when the data is correct
+            if (suggestion.track) {
+              suggestion.track.file = await this.trackService.getTrackFileById(suggestion.track._id);
+            }
+            return suggestion;
+          }));
+        return project;
     }
 
     @Put(':id')
