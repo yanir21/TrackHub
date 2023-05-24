@@ -41,10 +41,14 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
     }
   }, [props.isPlaying]);
 
-  useEffect(
-    () => waveform?.setMute(props.isDisabled),
-    [props.isDisabled, waveform]
-  );
+  useEffect(() => {
+    if (props.isDisabled) {
+      waveform?.setProgressColor('#717171');
+    } else {
+      waveform?.setProgressColor('#3fc2af');
+    }
+    waveform?.setMute(props.isDisabled);
+  }, [props.isDisabled, waveform]);
 
   useEffect(() => {
     waveform?.setDisabledEventEmissions(['seek']);
