@@ -6,6 +6,9 @@ interface WaveformPlayerProps {
   url: string;
   id: number;
   isPlaying: boolean;
+  isDisabled: boolean;
+  pos: number;
+  onPosChange: (currentTIme?: number) => void;
 }
 
 const WaveformPlayer = (props: WaveformPlayerProps) => {
@@ -37,6 +40,23 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
       waveform.pause();
     }
   }, [props.isPlaying]);
+
+  useEffect(
+    () => waveform?.setMute(props.isDisabled),
+    [props.isDisabled, waveform]
+  );
+
+  useEffect(() => {
+    waveform?.setDisabledEventEmissions(['seek']);
+    waveform?.seekTo(props.pos);
+    waveform?.setDisabledEventEmissions([]);
+  }, [props.pos]);
+
+  useEffect(() => {
+    waveform?.on('seek', (position) => {
+      props.onPosChange(position);
+    });
+  }, [waveform]);
 
   return (
     <div className='wave-container'>

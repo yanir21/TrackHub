@@ -33,6 +33,7 @@ const ProjectPage = () => {
   const allTracks = [track1, track2, track3];
   const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [posToJumpTo, setPosToJumpTo] = useState<number>(0);
 
   const handleSpacebarPress = (e: any) => {
     if (e.key === ' ') {
@@ -95,6 +96,12 @@ const ProjectPage = () => {
         id={6969}
         track={track1}
         isPlaying={isPlaying}
+        pos={posToJumpTo}
+        onPosChange={(currentTIme?: number) => {
+          if (currentTIme) {
+            setPosToJumpTo(currentTIme);
+          }
+        }}
       />
       <div className='section-header'>Suggested Tracks</div>
 
@@ -105,6 +112,12 @@ const ProjectPage = () => {
           track={track}
           isPlaying={isPlaying}
           onMutePressed={handleTrackChange}
+          pos={posToJumpTo}
+          onPosChange={(currentTIme?: number) => {
+            if (currentTIme) {
+              setPosToJumpTo(currentTIme);
+            }
+          }}
         />
       ))}
     </div>

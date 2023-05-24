@@ -10,11 +10,21 @@ interface TrackRowProps {
   id: number;
   onMutePressed?: (track: string) => void;
   onSoloPressed?: () => void;
+  pos: number;
+  onPosChange: (currentTIme?: number) => void;
 }
 
 const TrackRow = (props: TrackRowProps) => {
-  const { isDisabled, track, id, isPlaying, onMutePressed, onSoloPressed } =
-    props;
+  const {
+    isDisabled,
+    track,
+    id,
+    isPlaying,
+    onMutePressed,
+    onSoloPressed,
+    pos,
+    onPosChange
+  } = props;
   return (
     <div className={classNames('track-row')} key={id}>
       <div
@@ -25,7 +35,10 @@ const TrackRow = (props: TrackRowProps) => {
         <WaveformPlayer
           url={track}
           id={id}
-          isPlaying={isPlaying && !isDisabled}
+          isPlaying={isPlaying}
+          isDisabled={isDisabled}
+          pos={pos}
+          onPosChange={onPosChange}
         />
       </div>
       {onMutePressed && (
