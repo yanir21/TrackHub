@@ -16,8 +16,6 @@ const user_module_1 = require("./user/user.module");
 const project_module_1 = require("./project/project.module");
 const tag_module_1 = require("./tag/tag.module");
 const mongoose_1 = require("@nestjs/mongoose");
-const track_module_1 = require("./track/track.module");
-const suggestion_module_1 = require("./suggestion/suggestion.module");
 const username = process.env.MONGO_USERNAME;
 const password = process.env.MONGO_PASSWORD;
 let AppModule = class AppModule {
@@ -29,9 +27,7 @@ AppModule = __decorate([
             user_module_1.UserModule,
             auth_module_1.AuthModule,
             project_module_1.ProjectModule,
-            tag_module_1.TagModule,
-            track_module_1.TrackModule,
-            suggestion_module_1.SuggestionModule
+            tag_module_1.TagModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

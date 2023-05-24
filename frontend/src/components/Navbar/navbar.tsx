@@ -11,17 +11,15 @@ const Navbar = () => {
   return (
     <div className='navbar'>
       <div className='navbar-left'>
-        <span className='firstLogoWord'>Track</span>
-        <span className='secondLogoWord'>Hub</span>
+        {currentUser && <DisplayUser displayName={currentUser.displayName} />}
       </div>
-      <span className='navbar-center site-name'></span>
+      <span className='navbar-center site-name'>TrackHub</span>
       {currentUser && (
         <div className='navbar-right'>
-          <div className='logout-container' onClick={logout}>
-            <GrLogout className='logout-icon' stroke='white' />
-            <span className='logout-label'>Logout</span>
-          </div>
-          {currentUser && <DisplayUser displayName={currentUser.displayName} />}
+          <GrLogout className='logout-icon' stroke='white' />
+          <span className='logout-label' onClick={logout}>
+            Logout
+          </span>
         </div>
       )}
     </div>

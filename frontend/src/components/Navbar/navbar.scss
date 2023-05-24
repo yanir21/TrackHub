@@ -14,21 +14,23 @@
   }
 
   .navbar-center {
-    // position: absolute;
-    // left: 10%;
-    // transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .navbar-left {
     margin-left: 2rem;
-    font-size: 1.8rem;
   }
 
   .navbar-right {
-    margin-right: 2rem;
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 
   .logout-icon {
@@ -42,26 +44,5 @@
   .logout-label {
     margin-right: 20px;
     margin-left: 8px;
-  }
-  .logo {
-    width: 280px;
-    height: 70px;
-    margin-right: 20px;
-  }
-
-  .logout-container {
-    display: flex;
-    align-items: center;
-    transition: 0.2s;
-    &:hover {
-      filter: brightness(0.8);
-    }
-  }
-
-  .firstLogoWord {
-    color: $primary;
-  }
-  .secondLogoWord {
-    font-weight: 600;
   }
 }
