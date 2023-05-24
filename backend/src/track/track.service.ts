@@ -54,6 +54,6 @@ export class TrackService {
 
         const trackFile = await this.s3Client.getObject(params);
 
-        return await trackFile.Body.transformToString("utf-8");
+        return trackFile.Body.transformToString("utf-8");
     }
 }
