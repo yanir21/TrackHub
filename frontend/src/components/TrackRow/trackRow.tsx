@@ -7,7 +7,7 @@ interface TrackRowProps {
   track: string;
   isDisabled: boolean;
   isPlaying: boolean;
-  id: number;
+  id: string;
   onMutePressed?: (track: string) => void;
   onSoloPressed?: () => void;
   pos: number;

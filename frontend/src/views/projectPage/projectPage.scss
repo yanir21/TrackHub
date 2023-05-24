@@ -78,4 +78,15 @@
     cursor: pointer;
     width: 90px;
   }
+
+  .no-tracks-label {
+    color: $third;
+    .new-suggestion-label {
+      color: $primary;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

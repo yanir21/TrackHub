@@ -4,7 +4,7 @@ import './waveformPlayer.scss';
 
 interface WaveformPlayerProps {
   url: string;
-  id: number;
+  id: string;
   isPlaying: boolean;
   isDisabled: boolean;
   pos: number;

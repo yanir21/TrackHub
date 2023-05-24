@@ -1,7 +1,5 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import './projectPage.scss';
-import WaveformPlayer from '../../components/waveformPlayer/waveformPlayer';
-import classNames from 'classnames';
 import { Project } from '../../models/project';
 import ProjectTag from '../../components/ProjectTag/projectTag';
 import DisplayUser from '../../components/DisplayUser/displayUser';
@@ -30,8 +28,10 @@ const project: Project = {
 const length = '1:24';
 
 const ProjectPage = () => {
-  const allTracks = [track1, track2, track3];
-  const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+  const suggestedTracks = [track1, track3];
+  const approvedTracks: string[] = [track2];
+  const [selectedTracks, setSelectedTracks] =
+    useState<string[]>(approvedTracks);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [posToJumpTo, setPosToJumpTo] = useState<number>(0);
 
@@ -93,7 +93,7 @@ const ProjectPage = () => {
       </div>
       <TrackRow
         isDisabled={false}
-        id={6969}
+        id={'master'}
         track={track1}
         isPlaying={isPlaying}
         pos={posToJumpTo}
@@ -103,23 +103,51 @@ const ProjectPage = () => {
           }
         }}
       />
+      {approvedTracks.length > 0 && (
+        <>
+          <div className='section-header'>Approved Tracks</div>
+
+          {approvedTracks.map((track, index) => (
+            <TrackRow
+              isDisabled={!selectedTracks.includes(track)}
+              id={`approved-${index}`}
+              track={track}
+              isPlaying={isPlaying}
+              onMutePressed={handleTrackChange}
+              pos={posToJumpTo}
+              onPosChange={(currentTIme?: number) => {
+                if (currentTIme) {
+                  setPosToJumpTo(currentTIme);
+                }
+              }}
+            />
+          ))}
+        </>
+      )}
       <div className='section-header'>Suggested Tracks</div>
 
-      {[track1, track2, track3].map((track, index) => (
-        <TrackRow
-          isDisabled={!selectedTracks.includes(track)}
-          id={index}
-          track={track}
-          isPlaying={isPlaying}
-          onMutePressed={handleTrackChange}
-          pos={posToJumpTo}
-          onPosChange={(currentTIme?: number) => {
-            if (currentTIme) {
-              setPosToJumpTo(currentTIme);
-            }
-          }}
-        />
-      ))}
+      {suggestedTracks.length > 0 ? (
+        suggestedTracks.map((track, index) => (
+          <TrackRow
+            isDisabled={!selectedTracks.includes(track)}
+            id={`suggested-${index}`}
+            track={track}
+            isPlaying={isPlaying}
+            onMutePressed={handleTrackChange}
+            pos={posToJumpTo}
+            onPosChange={(currentTIme?: number) => {
+              if (currentTIme) {
+                setPosToJumpTo(currentTIme);
+              }
+            }}
+          />
+        ))
+      ) : (
+        <span className='no-tracks-label'>
+          The are no suggestions yet.
+          <span className='new-suggestion-label'> Submit one yourself</span>
+        </span>
+      )}
     </div>
   );
 };
