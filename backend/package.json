@@ -37,8 +37,7 @@
     "nest": "^0.1.6",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
-    "uniqid": "^5.4.0",
-    "uuid": "^9.0.0"
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.3.0",

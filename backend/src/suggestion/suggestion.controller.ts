@@ -44,7 +44,14 @@ export class SuggestionController {
   @Get()
   async findAllOfUser(@Username() username: string) {
     const suggester = await this.userService.getUserByUsername(username);
-    return await this.suggestionService.findAllOfUser(suggester._id);
+    const suggestions = await this.suggestionService.findAllOfUser(suggester._id);
+    return Promise.all(suggestions.map(async suggestion => {
+      // TODO: remove this if clause, when the data is correct
+      if (suggestion.track) {
+        suggestion.track.file = await this.trackService.getTrackFileById(suggestion.track._id);
+      }
+      return suggestion;
+    }));
   }
 
   @Put('status/:id')
