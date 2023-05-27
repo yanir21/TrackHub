@@ -9,8 +9,9 @@ import {
     Put,
     UploadedFile,
     ParseFilePipeBuilder,
-    UseInterceptors
+    UseInterceptors,
 } from '@nestjs/common';
+import uniqid from 'uniqid';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -20,7 +21,8 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TrackService } from 'src/track/track.service';
 import { UploadTrackDto } from 'src/track/dto/upload-track.dto';
-import { v4 as uuidv4 } from 'uuid';
+
+
 @Controller('projects')
 @UseGuards(AuthGuard)
 export class ProjectController {
@@ -37,36 +39,60 @@ export class ProjectController {
         @Username() username: string,
         @UploadedFile(
             new ParseFilePipeBuilder()
-                .addFileTypeValidator({
-                    fileType: 'audio/mpeg'
-                })
-                .build()
-        )
-        trackFile: Express.Multer.File
+              .addFileTypeValidator({
+                fileType: 'audio/mpeg'
+              })
+              .build()) trackFile: Express.Multer.File,
     ) {
         const author = await this.userService.getUserByUsername(username);
         const uploadTrackDto: UploadTrackDto = {
-            key: uuidv4()
+            key: uniqid()
         };
-        const track = await this.trackService.upload(
-            uploadTrackDto,
-            trackFile.buffer.toString()
-        );
-        return await this.projectService.create(
-            createProjectDto,
-            author._id,
-            track._id
-        );
+        const track = await this.trackService.upload(uploadTrackDto, trackFile.buffer.toString());
+        return await this.projectService.create(createProjectDto, author._id, track._id);
     }
 
     @Get()
+    // TODO: add skip and limit
     async findAll() {
-        return await this.projectService.findAll();
+        const projects = await this.projectService.findAll();
+        return Promise.all(projects.map(async project => {
+            // TODO: remove this if clause, when the data is correct
+            if (project.masterTrack) {
+                project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
+            }
+            return project;
+        }));
     }
+
+    @Get('user/:id')
+    // TODO: add skip and limit
+    async findAllOfUser(@Param('id') userId: string) {
+      const projects = await this.projectService.findAllOfUser(userId);
+
+      return Promise.all(projects.map(async project => {
+        // TODO: remove this if clause, when the data is correct
+        if (project.masterTrack) {
+            project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
+        }
+        return project;
+    }));
+    }
+  
 
     @Get(':id')
     async findOne(@Param('id') id: string) {
-        return await this.projectService.findOne(id);
+        const project = await this.projectService.findOne(id);
+        const trackFile = await this.trackService.getTrackFileById(project.masterTrack._id);
+        project.masterTrack.file = trackFile;
+        project.suggestions = await Promise.all(project.suggestions.map(async suggestion => {
+            // TODO: remove this if clause, when the data is correct
+            if (suggestion.track) {
+              suggestion.track.file = await this.trackService.getTrackFileById(suggestion.track._id);
+            }
+            return suggestion;
+          }));
+        return project;
     }
 
     @Put(':id')
