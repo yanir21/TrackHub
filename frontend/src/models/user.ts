@@ -1,11 +1,12 @@
 export interface User {
-    username: string;
-    password: string;
-    displayName: string;
-    imageUrl?: String;
+  username: string;
+  password: string;
+  displayName: string;
+  imageUrl?: String;
 }
 
 export interface UserAuth {
-    username: string;
-    displayName: string;
+  id: string;
+  username: string;
+  displayName: string;
 }

@@ -1,0 +1,9 @@
+@import 'src/consts.scss';
+
+.tags-container {
+  border-radius: 20px;
+  padding: 2rem 1rem;
+  width: 40%;
+  background-color: $secondary;
+  overflow: auto;
+}

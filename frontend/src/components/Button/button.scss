@@ -1,0 +1,27 @@
+@import '/src/consts.scss';
+
+button {
+  font-family: Roboto, sans-serif;
+  font-weight: 0;
+  font-size: 14px;
+  color: #fff;
+  background-color: $primary;
+  padding: 10px 30px;
+  border: solid $secondary 2px;
+  box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+  border-radius: 50px;
+  transition: 0.2s;
+  transform: translateY(0);
+  flex-direction: row;
+  align-items: center;
+  font-weight: bold;
+  padding: 1rem 1rem;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.2s;
+    background-color: $off-white;
+    color: $secondary;
+    // border: solid 2px $primary;
+  }
+}

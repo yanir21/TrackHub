@@ -4,6 +4,15 @@ $third: #717171;
 $fourth: #424754;
 $dark: #0e1217;
 $off-white: #f5f5f5;
+$white: #ffffff;
+
+$audio-card-container-padding-x: 0rem;
+$audio-card-container-padding-y: 1.8rem;
+$audio-card-container-margin-x: 3rem;
+$audio-card-container-margin-y: 2rem;
+$audio-card-container-width: calc(
+  100% - #{$audio-card-container-padding-x}* 2 - #{$audio-card-container-margin-x}* 2
+);
 
 :export {
   primaryColor: $primary;

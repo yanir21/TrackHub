@@ -1,0 +1,85 @@
+@import 'src/consts.scss';
+
+.new-project-page {
+  .tag {
+    display: flex;
+    overflow: none;
+    cursor: pointer;
+    width: 50%;
+    @media only screen and (min-width: 1100px) {
+      width: 33%;
+    }
+    @media only screen and (min-width: 1350px) {
+      width: 25%;
+    }
+  }
+
+  .new-song {
+    display: flex;
+    font-size: 1.4rem;
+    color: $fourth;
+    font-weight: bold;
+    text-align: start;
+    margin: 1rem 1rem;
+  }
+
+  .upload-title {
+    display: flex;
+    font-size: 1.4rem;
+    color: $white;
+    font-weight: bold;
+    justify-content: center;
+  }
+
+  .upload-audio {
+    margin: 1.5rem 0;
+  }
+
+  .tags-wrapper {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    height: 15rem;
+  }
+
+  .tags {
+    flex-wrap: wrap;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+
+  .first-sub-title {
+    margin-top: 1rem;
+    font-size: 1.15rem;
+    color: $fourth;
+    font-weight: bold;
+  }
+
+  .second-sub-title {
+    margin-bottom: 1rem;
+    font-size: 1.62rem;
+    color: $off-white;
+    font-weight: bold;
+  }
+
+  .new-audio-card-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .new-audio-card {
+    width: 50%;
+  }
+
+  .loader-container {
+    margin: 2rem;
+    display: flex;
+     justify-content: center;
+  }
+  .button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+}
