@@ -56,7 +56,7 @@
     text-align: start;
   }
 
-  .master-container {
+  .header-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -89,4 +89,33 @@
       }
     }
   }
+
+  .project-controls {
+    display: flex;
+    align-items: center;
+  }
+
+  .upload-button {
+    svg {
+      margin-right: 10px;
+    }
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
 }

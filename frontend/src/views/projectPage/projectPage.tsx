@@ -5,12 +5,31 @@ import ProjectTag from '../../components/ProjectTag/projectTag';
 import DisplayUser from '../../components/DisplayUser/displayUser';
 import { AudioFile } from '../../components/ExploreAudioCard/exploreAudioCard';
 import TrackRow from '../../components/TrackRow/trackRow';
-import { BsFillPauseFill, BsFillPlayFill } from 'react-icons/bs';
+import { BsFillPauseFill, BsFillPlayFill, BsUpload } from 'react-icons/bs';
 import { useEventListener } from '../../hooks';
+import UploadAudioButton from '../newProjectPage/UploadAudioButton/uploadAudioButton';
+import NewAudioCard from '../../components/newAudioCard/newAudioCard';
+import Modal from 'react-modal';
+import ModalContent from './ModalContent/modalContent';
 
 const track1 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track1.mp3';
 const track2 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
 const track3 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track3.mp3';
+const modalStyles = {
+  overlay: { zIndex: 3, backgroundColor: 'rgba(0,0,0,0.8)' },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: '#1c1f26',
+    zIndex: '5',
+    transition: '0.3s',
+    borderColor: 'black'
+  }
+};
 
 const project: Project = {
   _id: 'eliko',
@@ -34,9 +53,10 @@ const ProjectPage = () => {
     useState<string[]>(approvedTracks);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [posToJumpTo, setPosToJumpTo] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleSpacebarPress = (e: any) => {
-    if (e.key === ' ') {
+    if (e.key === ' ' && !isModalOpen) {
       setIsPlaying((isPlaying) => !isPlaying);
     }
   };
@@ -52,6 +72,9 @@ const ProjectPage = () => {
       );
     }
   };
+
+  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
 
   return (
     <div className='song-page'>
@@ -72,23 +95,31 @@ const ProjectPage = () => {
       <div className='middle-section'>
         <DisplayUser displayName={project.author.displayName} />
       </div>
-      <div className='section-header'>Description</div>
+      <div className='header-container'>
+        <div className='section-header'>Description</div>
+        <span className='upload-button' onClick={openModal}>
+          <BsUpload />
+          Contribute
+        </span>
+      </div>
       <div className='project-description'>{project.description}</div>
-      <div className='master-container'>
+      <div className='header-container'>
         <div className='section-header'>Master Track</div>
-        <span
-          className='play-button'
-          onClick={setIsPlaying.bind(this, !isPlaying)}
-        >
-          {isPlaying ? (
-            <span className='control'>
-              <BsFillPauseFill /> Pause
-            </span>
-          ) : (
-            <span className='control'>
-              <BsFillPlayFill /> Play
-            </span>
-          )}
+        <span className='project-controls'>
+          <span
+            className='play-button'
+            onClick={setIsPlaying.bind(this, !isPlaying)}
+          >
+            {isPlaying ? (
+              <span className='control'>
+                <BsFillPauseFill /> Pause
+              </span>
+            ) : (
+              <span className='control'>
+                <BsFillPlayFill /> Play
+              </span>
+            )}
+          </span>
         </span>
       </div>
       <TrackRow
@@ -148,6 +179,15 @@ const ProjectPage = () => {
           <span className='new-suggestion-label'> Submit one yourself</span>
         </span>
       )}
+      <Modal
+        style={modalStyles}
+        isOpen={isModalOpen}
+        closeTimeoutMS={200}
+        contentLabel='Example Modal'
+        onRequestClose={closeModal}
+      >
+        <ModalContent closeModal={closeModal} />
+      </Modal>
     </div>
   );
 };
