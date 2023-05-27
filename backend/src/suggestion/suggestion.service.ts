@@ -26,11 +26,11 @@ export class SuggestionService {
   }
 
   async findOne(id: string) {
-    return this.suggestionModel.findById(id).lean();
+    return this.suggestionModel.findById(id);
   }
 
   async findAllOfUser(suggesterId: string) {
-    return await this.suggestionModel.find({suggester: suggesterId}).populate("suggester track").lean();
+    return await this.suggestionModel.find({suggester: suggesterId}).populate("suggester track");
   }
 
   async updateStatus(id: string, updateSuggestionStatusDto: UpdateSuggestionStatusDto) {

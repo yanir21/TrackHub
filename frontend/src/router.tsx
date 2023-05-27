@@ -3,6 +3,8 @@ import LoginPage from './views/loginPage/loginPage';
 import RegisterPage from './views/registerPage/registerPage';
 import ExplorePage from './views/explorePage/explorePage';
 import ProfilePage from './views/profilePage/profilePage';
+import NewProjectPage from './views/newProjectPage/newProjectPage';
+import ProjectPage from './views/projectPage/projectPage';
 
 const Router = () => {
   return (
@@ -11,6 +13,8 @@ const Router = () => {
       <Route path='/explore' element={<ExplorePage />} />
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/register' element={<RegisterPage />} />
+      <Route path='/newProject' element={<NewProjectPage />} />
+      <Route path='/song' element={<ProjectPage />} />
     </Routes>
   );
 };

@@ -1,0 +1,13 @@
+.wave-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+  width: 90%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.wave {
+  width: 100%;
+}
