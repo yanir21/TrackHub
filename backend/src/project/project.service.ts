@@ -28,7 +28,7 @@ export class ProjectService {
   }
 
   async addSuggestion(projectId: string, suggestion: ISuggestion) {
-    const project = await this.findOne(projectId);
+    const project = await this.projectModel.findById(projectId);
     project.suggestions.push(suggestion);
     
     return await project.save();
