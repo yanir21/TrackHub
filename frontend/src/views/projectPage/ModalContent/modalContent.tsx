@@ -1,12 +1,53 @@
 import React, { useState } from 'react';
 import UploadAudioButton from '../../newProjectPage/UploadAudioButton/uploadAudioButton';
 import './modalContent.scss';
+import http from '../../../services/http';
+import { CREATED } from 'http-status';
 interface ModalContentProps {
   closeModal: () => void;
+  projectId: string;
+  reloadProject: () => void;
 }
-const ModalContent = ({ closeModal }: ModalContentProps) => {
+const ModalContent = ({
+  closeModal,
+  projectId,
+  reloadProject
+}: ModalContentProps) => {
   const [trackDescription, setTrackDescription] = useState<string>('');
   const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorText, setErrorText] = useState<string>();
+
+  const submitTrack = async () => {
+    setLoading(true);
+    try {
+      const response = await http.post(
+        '/suggestions',
+
+        {
+          track: file,
+          description: trackDescription,
+          projectId
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      if (response.status === CREATED) {
+        closeModal();
+        reloadProject();
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      setErrorText("Something didn't work, try again later");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className='modal-content'>
       <div className='modal-title'>Upload A suggestion</div>
@@ -24,12 +65,13 @@ const ModalContent = ({ closeModal }: ModalContentProps) => {
           />
         </>
       )}
+      {!!errorText && <div className='error-text'>{errorText}</div>}
       <div className='footer'>
         <label className='close-button' onClick={closeModal}>
           Cancel
         </label>
         {file?.name && (
-          <label className='submit-button' onClick={closeModal}>
+          <label className='submit-button' onClick={submitTrack}>
             Submit
           </label>
         )}

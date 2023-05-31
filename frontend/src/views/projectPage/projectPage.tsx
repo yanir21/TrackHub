@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useState } from 'react';
+import React, { KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import './projectPage.scss';
 import { Project } from '../../models/project';
 import ProjectTag from '../../components/ProjectTag/projectTag';
@@ -11,10 +11,11 @@ import UploadAudioButton from '../newProjectPage/UploadAudioButton/uploadAudioBu
 import NewAudioCard from '../../components/newAudioCard/newAudioCard';
 import Modal from 'react-modal';
 import ModalContent from './ModalContent/modalContent';
+import Loader from '../../components/Loader/loader';
+import http from '../../services/http';
+import { useParams } from 'react-router';
+import { Suggestion, SuggestionStatus } from '../../models/suggestion';
 
-const track1 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track1.mp3';
-const track2 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3';
-const track3 = 'https://www.mfiles.co.uk/mp3-downloads/gs-cd-track3.mp3';
 const modalStyles = {
   overlay: { zIndex: 3, backgroundColor: 'rgba(0,0,0,0.8)' },
   content: {
@@ -31,29 +32,15 @@ const modalStyles = {
   }
 };
 
-const project: Project = {
-  _id: 'eliko',
-  author: { username: 'mazi', displayName: 'Mazi Cohen', id: '1' },
-  description:
-    'This is a great song I started a couple weeks ago, contributers are welcome!',
-  masterTrack: 'abc',
-  suggestions: ['abc', 'cde', 'efg'],
-  title: 'My Humble Demise',
-  tags: [
-    { _id: '1', name: 'Hip Hop' },
-    { _id: '2', name: 'Electronic' }
-  ]
-};
-const length = '1:24';
-
 const ProjectPage = () => {
-  const suggestedTracks = [track1, track3];
-  const approvedTracks: string[] = [track2];
-  const [selectedTracks, setSelectedTracks] =
-    useState<string[]>(approvedTracks);
+  const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [posToJumpTo, setPosToJumpTo] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reloadFlag, setReloadFlag] = useState<boolean>(false);
+  const { id } = useParams();
+  const [project, setProject] = useState<Project>();
 
   const handleSpacebarPress = (e: any) => {
     if (e.key === ' ' && !isModalOpen) {
@@ -63,26 +50,68 @@ const ProjectPage = () => {
 
   useEventListener('keydown', handleSpacebarPress);
 
-  const handleTrackChange = (track: string) => {
-    if (!selectedTracks.includes(track)) {
-      setSelectedTracks((selectedTracks) => [...selectedTracks, track]);
+  const handleTrackChange = (trackId: string) => {
+    if (!selectedTracks.includes(trackId)) {
+      setSelectedTracks((selectedTracks) => [...selectedTracks, trackId]);
     } else {
       setSelectedTracks((selectedTracks) =>
-        selectedTracks.filter((currentTrack) => currentTrack != track)
+        selectedTracks.filter((currentTrack) => currentTrack != trackId)
       );
     }
   };
 
+  const approvedTracks = useMemo(
+    () =>
+      project?.suggestions.filter(
+        (track) => track.status == SuggestionStatus.APPROVED
+      ) ?? [],
+    [project]
+  );
+
+  const suggestions = useMemo(
+    () =>
+      project?.suggestions.filter(
+        (track) => track.status == SuggestionStatus.PENDING
+      ) ?? [],
+    [project]
+  );
+
+  useEffect(() => {
+    loadProject();
+  }, [reloadFlag]);
+
+  const loadProject = async () => {
+    setLoading(true);
+    try {
+      const loadedProject = (await http.get(`/projects/${id}`)).data;
+      setProject(loadedProject);
+      setSelectedTracks(loadedProject.suggestions);
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const reloadProject = () => {
+    setReloadFlag((flag) => !flag);
+  };
+
   const closeModal = () => setIsModalOpen(false);
   const openModal = () => setIsModalOpen(true);
-
+  if (loading || !project) {
+    return (
+      <div className='loader-container-explore-page'>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className='song-page'>
       <div className='section-header'>Project overview</div>
       <div className='project-top-line'>
         <div className='top-left'>
           <span className='project-title'>{project.title}</span>
-          <span className='project-length'>{length}</span>
+          <span className='project-length'>1:24</span>
         </div>
         <div className='top-right'>
           <div className='tags'>
@@ -125,7 +154,7 @@ const ProjectPage = () => {
       <TrackRow
         isDisabled={false}
         id={'master'}
-        track={track1}
+        track={project.masterTrack}
         isPlaying={isPlaying}
         pos={posToJumpTo}
         onPosChange={(currentTIme?: number) => {
@@ -138,11 +167,11 @@ const ProjectPage = () => {
         <>
           <div className='section-header'>Approved Tracks</div>
 
-          {approvedTracks.map((track, index) => (
+          {approvedTracks.map((suggestion, index) => (
             <TrackRow
-              isDisabled={!selectedTracks.includes(track)}
+              isDisabled={!selectedTracks.includes(suggestion.track._id)}
               id={`approved-${index}`}
-              track={track}
+              track={suggestion.track}
               isPlaying={isPlaying}
               onMutePressed={handleTrackChange}
               pos={posToJumpTo}
@@ -157,12 +186,12 @@ const ProjectPage = () => {
       )}
       <div className='section-header'>Suggested Tracks</div>
 
-      {suggestedTracks.length > 0 ? (
-        suggestedTracks.map((track, index) => (
+      {suggestions.length > 0 ? (
+        suggestions.map((suggestion, index) => (
           <TrackRow
-            isDisabled={!selectedTracks.includes(track)}
+            isDisabled={!selectedTracks.includes(suggestion.track._id)}
             id={`suggested-${index}`}
-            track={track}
+            track={suggestion.track}
             isPlaying={isPlaying}
             onMutePressed={handleTrackChange}
             pos={posToJumpTo}
@@ -176,7 +205,9 @@ const ProjectPage = () => {
       ) : (
         <span className='no-tracks-label'>
           The are no suggestions yet.
-          <span className='new-suggestion-label'> Submit one yourself</span>
+          <span className='new-suggestion-label' onClick={openModal}>
+            Submit one yourself
+          </span>
         </span>
       )}
       <Modal
@@ -186,7 +217,11 @@ const ProjectPage = () => {
         contentLabel='Example Modal'
         onRequestClose={closeModal}
       >
-        <ModalContent closeModal={closeModal} />
+        <ModalContent
+          closeModal={closeModal}
+          projectId={project._id}
+          reloadProject={reloadProject}
+        />
       </Modal>
     </div>
   );

@@ -1,4 +1,6 @@
+import { Suggestion } from './suggestion';
 import { Tag } from './tag';
+import { Track } from './track';
 import { UserAuth } from './user';
 
 export interface ProjectCreate {
@@ -17,6 +19,6 @@ export interface Project {
   title: string;
   description: string;
   tags: Tag[];
-  masterTrack: string;
-  suggestions: string[];
+  masterTrack: Track;
+  suggestions: Suggestion[];
 }

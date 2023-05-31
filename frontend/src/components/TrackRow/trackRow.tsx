@@ -2,9 +2,10 @@ import classNames from 'classnames';
 import React from 'react';
 import WaveformPlayer from '../waveformPlayer/waveformPlayer';
 import './trackRow.scss';
+import { Track } from '../../models/track';
 
 interface TrackRowProps {
-  track: string;
+  track: Track;
   isDisabled: boolean;
   isPlaying: boolean;
   id: string;
@@ -33,7 +34,7 @@ const TrackRow = (props: TrackRowProps) => {
         })}
       >
         <WaveformPlayer
-          url={track}
+          audio={track.url}
           id={id}
           isPlaying={isPlaying}
           isDisabled={isDisabled}
@@ -42,7 +43,7 @@ const TrackRow = (props: TrackRowProps) => {
         />
       </div>
       {onMutePressed && (
-        <div className='control-box' onClick={() => onMutePressed?.(track)}>
+        <div className='control-box' onClick={() => onMutePressed?.(track._id)}>
           {isDisabled ? 'Unmute' : 'Mute'}
         </div>
       )}

@@ -62,9 +62,12 @@ export default function ExploreAudioCard({
       </div>
     );
   };
-
+  debugger;
   return (
-    <div className='audio-card-container' onClick={() => navigate('/song')}>
+    <div
+      className='audio-card-container'
+      onClick={() => navigate(`/song/${project._id}`)}
+    >
       <div
         className={classNames('audio-card-first-column', {
           'author-displayed': showAuthor

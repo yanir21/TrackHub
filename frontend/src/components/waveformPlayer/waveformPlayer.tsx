@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import './waveformPlayer.scss';
+import { Track } from '../../models/track';
 
 interface WaveformPlayerProps {
-  url: string;
+  audio: string;
   id: string;
   isPlaying: boolean;
   isDisabled: boolean;
@@ -28,8 +29,7 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
       waveColor: '#EFEFEF',
       cursorColor: 'transparent'
     });
-
-    waveform.load(props.url);
+    waveform.load(props.audio);
     setWaveform(waveform);
   }, []);
 
@@ -65,7 +65,9 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
   return (
     <div className='wave-container'>
       <div id={`waveform-${props.id}`} className='wave' />
-      <audio id={`track-${props.id}`} src={props.url} />
+      <audio id={`track-${props.id}`}>
+        <source src={props.audio} type='blobType' />
+      </audio>
     </div>
   );
 };

@@ -9,9 +9,8 @@ import {
     Put,
     UploadedFile,
     ParseFilePipeBuilder,
-    UseInterceptors,
+    UseInterceptors
 } from '@nestjs/common';
-import uniqid from 'uniqid';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -21,7 +20,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TrackService } from 'src/track/track.service';
 import { UploadTrackDto } from 'src/track/dto/upload-track.dto';
-
 
 @Controller('projects')
 @UseGuards(AuthGuard)
@@ -39,59 +37,86 @@ export class ProjectController {
         @Username() username: string,
         @UploadedFile(
             new ParseFilePipeBuilder()
-              .addFileTypeValidator({
-                fileType: 'audio/mpeg'
-              })
-              .build()) trackFile: Express.Multer.File,
+                .addFileTypeValidator({
+                    fileType: 'audio/mpeg'
+                })
+                .build()
+        )
+        trackFile: Express.Multer.File
     ) {
         const author = await this.userService.getUserByUsername(username);
+        const uniqId = require('uniqid');
+
         const uploadTrackDto: UploadTrackDto = {
-            key: uniqid()
+            key: `${uniqId()}.mp3`
         };
-        const track = await this.trackService.upload(uploadTrackDto, trackFile.buffer.toString());
-        return await this.projectService.create(createProjectDto, author._id, track._id);
+        const track = await this.trackService.upload(
+            uploadTrackDto,
+            trackFile.buffer
+        );
+        return await this.projectService.create(
+            createProjectDto,
+            author._id,
+            track._id
+        );
     }
 
     @Get()
     // TODO: add skip and limit
     async findAll() {
         const projects = await this.projectService.findAll();
-        return Promise.all(projects.map(async project => {
-            // TODO: remove this if clause, when the data is correct
-            if (project.masterTrack) {
-                project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
-            }
-            return project;
-        }));
+        return Promise.all(
+            projects.map(async (project) => {
+                // TODO: remove this if clause, when the data is correct
+                if (project.masterTrack) {
+                    project.masterTrack.url =
+                        await this.trackService.getTrackUrlById(
+                            project.masterTrack._id
+                        );
+                }
+                return project;
+            })
+        );
     }
 
     @Get('user/:id')
     // TODO: add skip and limit
     async findAllOfUser(@Param('id') userId: string) {
-      const projects = await this.projectService.findAllOfUser(userId);
+        const projects = await this.projectService.findAllOfUser(userId);
 
-      return Promise.all(projects.map(async project => {
-        // TODO: remove this if clause, when the data is correct
-        if (project.masterTrack) {
-            project.masterTrack.file = await this.trackService.getTrackFileById(project.masterTrack._id);
-        }
-        return project;
-    }));
+        return Promise.all(
+            projects.map(async (project) => {
+                // TODO: remove this if clause, when the data is correct
+                if (project.masterTrack) {
+                    project.masterTrack.url =
+                        await this.trackService.getTrackUrlById(
+                            project.masterTrack._id
+                        );
+                }
+                return project;
+            })
+        );
     }
-  
 
     @Get(':id')
     async findOne(@Param('id') id: string) {
         const project = await this.projectService.findOne(id);
-        const trackFile = await this.trackService.getTrackFileById(project.masterTrack._id);
-        project.masterTrack.file = trackFile;
-        project.suggestions = await Promise.all(project.suggestions.map(async suggestion => {
-            // TODO: remove this if clause, when the data is correct
-            if (suggestion.track) {
-              suggestion.track.file = await this.trackService.getTrackFileById(suggestion.track._id);
-            }
-            return suggestion;
-          }));
+        const trackFile = await this.trackService.getTrackUrlById(
+            project.masterTrack._id
+        );
+        project.masterTrack.url = trackFile;
+        project.suggestions = await Promise.all(
+            project.suggestions.map(async (suggestion) => {
+                // TODO: remove this if clause, when the data is correct
+                if (suggestion.track) {
+                    suggestion.track.url =
+                        await this.trackService.getTrackUrlById(
+                            suggestion.track._id
+                        );
+                }
+                return suggestion;
+            })
+        );
         return project;
     }
 

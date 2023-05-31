@@ -1,13 +1,9 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSuggestionDto {
     @IsString()
     @IsNotEmpty()
     description: string;
-
-    @IsString()
-    @IsNotEmpty()
-    trackKey: string;
 
     @IsString()
     @IsNotEmpty()

@@ -14,7 +14,7 @@ const Router = () => {
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/register' element={<RegisterPage />} />
       <Route path='/newProject' element={<NewProjectPage />} />
-      <Route path='/song' element={<ProjectPage />} />
+      <Route path='/song/:id' element={<ProjectPage />} />
     </Routes>
   );
 };
