@@ -15,6 +15,7 @@ interface WaveformPlayerProps {
 const WaveformPlayer = (props: WaveformPlayerProps) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [waveform, setWaveform] = useState<WaveSurfer>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const waveform = WaveSurfer.create({
@@ -31,6 +32,9 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
     });
     waveform.load(props.audio);
     setWaveform(waveform);
+    waveform.once('ready', () => {
+      setLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -65,9 +69,17 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
   return (
     <div className='wave-container'>
       <div id={`waveform-${props.id}`} className='wave' />
-      <audio id={`track-${props.id}`}>
-        <source src={props.audio} type='blobType' />
-      </audio>
+      {loading ? (
+        <div className='lds-facebook'>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        <audio id={`track-${props.id}`}>
+          <source src={props.audio} type='blobType' />
+        </audio>
+      )}
     </div>
   );
 };

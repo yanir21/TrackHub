@@ -19,7 +19,7 @@ const NewAudioCard = React.memo(({ masterTrack }: NewAudioCardProps) => {
       <SongDescriptionInput />
     </div>
   );
-  debugger;
+
   const AudioFile = () => {
     return (
       <div className='audio-file-container'>

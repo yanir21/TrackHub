@@ -62,7 +62,7 @@ export default function ExploreAudioCard({
       </div>
     );
   };
-  debugger;
+
   return (
     <div
       className='audio-card-container'
