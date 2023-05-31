@@ -60,19 +60,18 @@ const ProjectPage = () => {
     }
   };
 
+  const getSuggestionsByStatus = (
+    status: SuggestionStatus,
+    project?: Project
+  ) => project?.suggestions.filter((track) => track.status == status) ?? [];
+
   const approvedTracks = useMemo(
-    () =>
-      project?.suggestions.filter(
-        (track) => track.status == SuggestionStatus.APPROVED
-      ) ?? [],
+    () => getSuggestionsByStatus(SuggestionStatus.APPROVED, project),
     [project]
   );
 
   const suggestions = useMemo(
-    () =>
-      project?.suggestions.filter(
-        (track) => track.status == SuggestionStatus.PENDING
-      ) ?? [],
+    () => getSuggestionsByStatus(SuggestionStatus.PENDING, project),
     [project]
   );
 
@@ -83,9 +82,14 @@ const ProjectPage = () => {
   const loadProject = async () => {
     setLoading(true);
     try {
-      const loadedProject = (await http.get(`/projects/${id}`)).data;
+      const loadedProject: Project = (await http.get(`/projects/${id}`)).data;
       setProject(loadedProject);
-      setSelectedTracks(loadedProject.suggestions);
+      setSelectedTracks([
+        ...getSuggestionsByStatus(SuggestionStatus.APPROVED, loadedProject).map(
+          (s) => s._id
+        ),
+        loadedProject.masterTrack._id
+      ]);
     } catch (err) {
     } finally {
       setLoading(false);
@@ -152,9 +156,11 @@ const ProjectPage = () => {
         </span>
       </div>
       <TrackRow
-        isDisabled={false}
-        id={'master'}
+        isDisabled={!selectedTracks.includes(project.masterTrack._id)}
+        id={project.masterTrack._id}
+        key={project.masterTrack._id}
         track={project.masterTrack}
+        onMutePressed={handleTrackChange}
         isPlaying={isPlaying}
         pos={posToJumpTo}
         onPosChange={(currentTIme?: number) => {
@@ -170,9 +176,12 @@ const ProjectPage = () => {
           {approvedTracks.map((suggestion, index) => (
             <TrackRow
               isDisabled={!selectedTracks.includes(suggestion.track._id)}
-              id={`approved-${index}`}
+              id={suggestion._id}
+              key={suggestion._id}
               track={suggestion.track}
               isPlaying={isPlaying}
+              author={suggestion.suggester}
+              description={suggestion.description}
               onMutePressed={handleTrackChange}
               pos={posToJumpTo}
               onPosChange={(currentTIme?: number) => {
@@ -190,10 +199,13 @@ const ProjectPage = () => {
         suggestions.map((suggestion, index) => (
           <TrackRow
             isDisabled={!selectedTracks.includes(suggestion.track._id)}
-            id={`suggested-${index}`}
+            key={suggestion._id}
+            id={suggestion._id}
             track={suggestion.track}
             isPlaying={isPlaying}
             onMutePressed={handleTrackChange}
+            author={suggestion.suggester}
+            description={suggestion.description}
             pos={posToJumpTo}
             onPosChange={(currentTIme?: number) => {
               if (currentTIme) {

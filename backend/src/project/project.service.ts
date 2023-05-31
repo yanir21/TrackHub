@@ -72,7 +72,7 @@ export class ProjectService {
             .populate({
                 path: 'suggestions',
                 populate: {
-                    path: 'track'
+                    path: 'track suggester'
                 }
             })
             .lean();
