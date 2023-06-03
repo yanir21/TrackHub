@@ -1,14 +1,62 @@
 @import 'src/consts.scss';
+.track-row-container {
+  background-color: $secondary;
+  border-radius: 6px;
+  margin: 12px 0;
+  color: $off-white;
+  .suggestion-details {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    text-align: start;
+    padding: 6px;
+    background-color: $fourth;
+    display: flex;
+    justify-content: space-between;
+  }
+  .author-details {
+    font-weight: 600;
+  }
+
+  .right-details {
+    display: flex;
+  }
+
+  .owner-controls {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    svg {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .approve-button {
+      &:hover {
+        color: #77dd77;
+      }
+    }
+    .reject-button {
+      &:hover {
+        color: #ff6961;
+      }
+      margin-left: 10px;
+    }
+  }
+
+  .date-container {
+    color: $third;
+  }
+}
 
 .track-row {
   display: flex;
   align-items: center;
 
-  background-color: $secondary;
   position: relative;
-  border-radius: 6px;
+
   padding: 10px;
-  margin: 10px 0;
 
   .waveform-container {
     width: 100%;
@@ -45,13 +93,5 @@
       width: 20px;
       height: 20px;
     }
-  }
-
-  .suggestion-details {
-    line-height: 1rem;
-  }
-
-  .track-description {
-    color: $third;
   }
 }

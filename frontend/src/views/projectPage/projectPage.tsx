@@ -142,6 +142,7 @@ const ProjectPage = () => {
           <span
             className='play-button'
             onClick={setIsPlaying.bind(this, !isPlaying)}
+            title='Play/Pause selected tracks (Also activates on spacebar press)'
           >
             {isPlaying ? (
               <span className='control'>
@@ -181,6 +182,7 @@ const ProjectPage = () => {
               track={suggestion.track}
               isPlaying={isPlaying}
               author={suggestion.suggester}
+              createdAt={suggestion.creationDate}
               description={suggestion.description}
               onMutePressed={handleTrackChange}
               pos={posToJumpTo}
@@ -205,7 +207,9 @@ const ProjectPage = () => {
             isPlaying={isPlaying}
             onMutePressed={handleTrackChange}
             author={suggestion.suggester}
+            projectOwner={project.author.id}
             description={suggestion.description}
+            createdAt={suggestion.creationDate}
             pos={posToJumpTo}
             onPosChange={(currentTIme?: number) => {
               if (currentTIme) {

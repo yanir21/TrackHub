@@ -23,7 +23,7 @@ const WaveformPlayer = (props: WaveformPlayerProps) => {
       cursorWidth: 1,
       container: `#waveform-${props.id}`,
       backend: 'WebAudio',
-      height: 80,
+      height: 65,
       progressColor: '#3fc2af',
       responsive: true,
       splitChannels: false,
