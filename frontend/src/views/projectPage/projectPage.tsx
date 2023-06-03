@@ -1,20 +1,17 @@
-import React, { KeyboardEvent, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './projectPage.scss';
 import { Project } from '../../models/project';
 import ProjectTag from '../../components/ProjectTag/projectTag';
 import DisplayUser from '../../components/DisplayUser/displayUser';
-import { AudioFile } from '../../components/ExploreAudioCard/exploreAudioCard';
 import TrackRow from '../../components/TrackRow/trackRow';
 import { BsFillPauseFill, BsFillPlayFill, BsUpload } from 'react-icons/bs';
 import { useEventListener } from '../../hooks';
-import UploadAudioButton from '../newProjectPage/UploadAudioButton/uploadAudioButton';
-import NewAudioCard from '../../components/newAudioCard/newAudioCard';
 import Modal from 'react-modal';
 import ModalContent from './ModalContent/modalContent';
 import Loader from '../../components/Loader/loader';
 import http from '../../services/http';
 import { useParams } from 'react-router';
-import { Suggestion, SuggestionStatus } from '../../models/suggestion';
+import { SuggestionStatus } from '../../models/suggestion';
 
 const modalStyles = {
   overlay: { zIndex: 3, backgroundColor: 'rgba(0,0,0,0.8)' },
@@ -86,7 +83,7 @@ const ProjectPage = () => {
       setProject(loadedProject);
       setSelectedTracks([
         ...getSuggestionsByStatus(SuggestionStatus.APPROVED, loadedProject).map(
-          (s) => s._id
+          (s) => s.track._id
         ),
         loadedProject.masterTrack._id
       ]);
@@ -207,7 +204,7 @@ const ProjectPage = () => {
             isPlaying={isPlaying}
             onMutePressed={handleTrackChange}
             author={suggestion.suggester}
-            projectOwner={project.author.id}
+            projectOwner={project.author._id}
             description={suggestion.description}
             createdAt={suggestion.creationDate}
             pos={posToJumpTo}
@@ -216,6 +213,7 @@ const ProjectPage = () => {
                 setPosToJumpTo(currentTIme);
               }
             }}
+            reloadProject={reloadProject}
           />
         ))
       ) : (

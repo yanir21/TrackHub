@@ -90,7 +90,7 @@ export class SuggestionController {
         );
     }
 
-    @Put('status/:id')
+    @Put('/:id')
     async update(
         @Param('id') id: string,
         @Body() updateSuggestionStatusDto: UpdateSuggestionStatusDto,

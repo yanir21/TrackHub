@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ProjectCreate } from '../models/project';
+import { Project, ProjectCreate } from '../models/project';
 import http from '../services/http';
 import useSWR from 'swr';
 import { Tag } from '../models/tag';
@@ -11,10 +11,10 @@ interface UseGetUserProjectProps {
 const useGetUserProjects = ({ userId }: UseGetUserProjectProps) => {
   const fetcher = async (url: string) => {
     const res = await http.get(url);
-    return res.data as Promise<ProjectCreate[]>;
+    return res.data as Promise<Project[]>;
   };
 
-  const { data, error, isLoading } = useSWR<ProjectCreate[]>(
+  const { data, error, isLoading } = useSWR<Project[]>(
     `/projects/${userId}`,
     fetcher
   );

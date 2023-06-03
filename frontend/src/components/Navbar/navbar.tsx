@@ -4,10 +4,11 @@ import { AuthContextType } from '../../models/AuthContext';
 import DisplayUser from '../DisplayUser/displayUser';
 import { GrLogout } from 'react-icons/gr';
 import './navbar.scss';
+import { useNavigate } from 'react-router';
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext) as AuthContextType;
-
+  const navigate = useNavigate();
   return (
     <div className='navbar'>
       <div className='navbar-left'>
@@ -21,7 +22,12 @@ const Navbar = () => {
             <GrLogout className='logout-icon' stroke='white' />
             <span className='logout-label'>Logout</span>
           </div>
-          {currentUser && <DisplayUser displayName={currentUser.displayName} />}
+          {currentUser && (
+            <DisplayUser
+              displayName={currentUser.displayName}
+              onClick={() => navigate('/profile')}
+            />
+          )}
         </div>
       )}
     </div>

@@ -5,7 +5,7 @@ import { User } from './user';
 export enum SuggestionStatus {
   PENDING = 'pending',
   APPROVED = 'approved',
-  REGECTED = 'rejected'
+  REJECTED = 'rejected'
 }
 
 export interface Suggestion {

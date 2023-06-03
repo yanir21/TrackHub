@@ -9,6 +9,8 @@ import { Tooltip } from 'react-tooltip';
 import { AuthContext } from '../../App';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { AuthContextType } from '../../models/AuthContext';
+import { SuggestionStatus } from '../../models/suggestion';
+import { updateSuggestionStatus } from '../../services/trackService';
 
 interface TrackRowProps {
   track: Track;
@@ -23,6 +25,7 @@ interface TrackRowProps {
   description?: string;
   createdAt?: Date;
   projectOwner?: string;
+  reloadProject?: () => void;
 }
 
 const TrackRow = (props: TrackRowProps) => {
@@ -38,7 +41,8 @@ const TrackRow = (props: TrackRowProps) => {
     author,
     description,
     createdAt,
-    projectOwner
+    projectOwner,
+    reloadProject: reloadTracks
   } = props;
 
   const { currentUser } = useContext(AuthContext) as AuthContextType;
@@ -54,6 +58,24 @@ const TrackRow = (props: TrackRowProps) => {
     }
   }, [createdAt]);
 
+  const approveTrack = async () => {
+    try {
+      await updateSuggestionStatus(id, SuggestionStatus.APPROVED);
+      reloadTracks?.();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const rejectTrack = async () => {
+    try {
+      await updateSuggestionStatus(id, SuggestionStatus.REJECTED);
+      reloadTracks?.();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className='track-row-container'>
       {author && (
@@ -63,20 +85,27 @@ const TrackRow = (props: TrackRowProps) => {
             <span className='track-description'> {description}</span>
           </span>
           <span className='right-details'>
-            {currentUser?.id == projectOwner && (
+            {projectOwner && currentUser?.sub === projectOwner && (
               <span className='owner-controls'>
                 <Tooltip
                   content='Approve this suggestion'
                   anchorSelect='.approve-button'
                   style={{ backgroundColor: '#1c1f26' }}
                 />
-                <AiOutlineCheckCircle id='check' className='approve-button' />
+                <AiOutlineCheckCircle
+                  id='check'
+                  className='approve-button'
+                  onClick={approveTrack}
+                />
                 <Tooltip
                   content='Reject this suggestion'
                   anchorSelect='.reject-button'
                   style={{ backgroundColor: '#1c1f26' }}
                 />
-                <AiOutlineCloseCircle className='reject-button' />
+                <AiOutlineCloseCircle
+                  className='reject-button'
+                  onClick={rejectTrack}
+                />
               </span>
             )}
             <span className='date-container'>{dateString}</span>

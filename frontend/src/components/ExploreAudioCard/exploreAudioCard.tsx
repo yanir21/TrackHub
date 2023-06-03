@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProjectCreate } from '../../models/project';
+import { Project } from '../../models/project';
 import DisplayUser from '../DisplayUser/displayUser';
 import ProjectTag from '../ProjectTag/projectTag';
 import classNames from 'classnames';
@@ -20,7 +20,7 @@ export const AudioFile = () => {
 };
 
 interface ExploreAudioCardProps {
-  project: ProjectCreate;
+  project: Project;
   showAuthor?: boolean;
 }
 
@@ -53,12 +53,12 @@ export default function ExploreAudioCard({
   );
 
   const AudioFile = () => {
-    // get audio from internet for mock
-    const audioFile =
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
     return (
-      <div className='audio-file-container'>
-        <AudioPlayer src={audioFile} layout='stacked-reverse' />
+      <div
+        className='audio-file-container'
+        onClick={(e) => e.stopPropagation()}
+      >
+        <AudioPlayer src={project.masterTrack.url} layout='stacked-reverse' />
       </div>
     );
   };

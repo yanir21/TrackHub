@@ -41,10 +41,7 @@ const ProfilePage = () => {
         )}
       </div>
       {currentUser && (
-        <div className='user-display-name'>
-          {currentUser.displayName}
-          {/* <RiPencilLine className='name-edit-icon' /> */}
-        </div>
+        <div className='user-display-name'>{currentUser.displayName}</div>
       )}
 
       <div className='section-header'>Songs</div>

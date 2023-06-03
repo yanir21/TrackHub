@@ -1,4 +1,5 @@
 export interface User {
+  _id: string;
   username: string;
   password: string;
   displayName: string;
@@ -7,6 +8,7 @@ export interface User {
 
 export interface UserAuth {
   id: string;
+  sub: string;
   username: string;
   displayName: string;
 }
