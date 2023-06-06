@@ -1,0 +1,122 @@
+@import 'src/consts.scss';
+
+.song-page {
+  padding: 20px 30px;
+
+  .section-header {
+    font-size: 1.4rem;
+    color: $fourth;
+    font-weight: bold;
+    text-align: start;
+  }
+
+  .checkbox-round {
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    outline: none;
+    &:checked {
+      background-color: $primary;
+    }
+  }
+
+  .project-top-line {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .top-left {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .project-length {
+    margin-left: 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .project-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .middle-section {
+    margin: 12px 0;
+  }
+
+  .project-description {
+    margin: 12px 0;
+    text-align: start;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .play-button {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .control {
+    background-color: $primary;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    cursor: pointer;
+    width: 90px;
+  }
+
+  .no-tracks-label {
+    color: $third;
+    .new-suggestion-label {
+      color: $primary;
+      margin-left: 10px;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .project-controls {
+    display: flex;
+    align-items: center;
+  }
+
+  .upload-button {
+    svg {
+      margin-right: 10px;
+    }
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}

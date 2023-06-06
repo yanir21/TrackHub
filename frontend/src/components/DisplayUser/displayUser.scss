@@ -1,0 +1,13 @@
+@import 'src/consts.scss';
+.display-user-container {
+  display: flex;
+
+  .display-name {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: lighter;
+    color: $off-white;
+    margin-left: 0.5rem;
+  }
+}

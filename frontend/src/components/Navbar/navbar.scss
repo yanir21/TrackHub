@@ -1,15 +1,67 @@
-@import "src/consts.scss";
+@import 'src/consts.scss';
 
 .navbar {
   width: 100%;
   height: 10vh;
   border-bottom: 2px solid $secondary;
   display: flex;
+  position: relative;
   align-items: center;
-  justify-content: center;
-
+  justify-content: space-between;
   .site-name {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
+  }
+
+  .navbar-center {
+    // position: absolute;
+    // left: 10%;
+    // transform: translateX(-50%);
+  }
+
+  .navbar-left {
+    margin-left: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .navbar-right {
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .logout-icon {
+    width: 20px;
+    height: 20px;
+    path {
+      stroke: $off-white;
+    }
+  }
+
+  .logout-label {
+    margin-right: 20px;
+    margin-left: 8px;
+  }
+  .logo {
+    width: 280px;
+    height: 70px;
+    margin-right: 20px;
+  }
+
+  .logout-container {
+    display: flex;
+    align-items: center;
+    transition: 0.2s;
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
+  .firstLogoWord {
+    color: $primary;
+  }
+  .secondLogoWord {
+    font-weight: 600;
   }
 }

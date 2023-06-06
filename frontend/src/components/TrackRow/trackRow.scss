@@ -1,0 +1,97 @@
+@import 'src/consts.scss';
+.track-row-container {
+  background-color: $secondary;
+  border-radius: 6px;
+  margin: 12px 0;
+  color: $off-white;
+  .suggestion-details {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    text-align: start;
+    padding: 6px;
+    background-color: $fourth;
+    display: flex;
+    justify-content: space-between;
+  }
+  .author-details {
+    font-weight: 600;
+  }
+
+  .right-details {
+    display: flex;
+  }
+
+  .owner-controls {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    svg {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .approve-button {
+      &:hover {
+        color: #77dd77;
+      }
+    }
+    .reject-button {
+      &:hover {
+        color: #ff6961;
+      }
+      margin-left: 10px;
+    }
+  }
+
+  .date-container {
+    color: $third;
+  }
+}
+
+.track-row {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  padding: 10px;
+
+  .waveform-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: baseline;
+    transition: 0.2s;
+    &.disabled {
+      filter: brightness(0.7);
+    }
+  }
+
+  .control-box {
+    padding: 6px;
+    display: flex;
+    font-size: 0.8rem;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    cursor: pointer;
+    border: 1px solid $third;
+    border-radius: 6px;
+    width: 90px;
+    user-select: none;
+    // color: $third;
+    filter: brightness(0.8);
+    transition: 0.2s;
+    &:hover {
+      filter: brightness(1);
+    }
+    svg {
+      margin-right: 6px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

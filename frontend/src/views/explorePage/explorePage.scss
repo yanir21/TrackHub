@@ -1,0 +1,19 @@
+.explore-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    // height: 100%;
+    // padding: 0 20px;
+}
+.loader-container-explore-page {
+    position: absolute;
+    top:30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.explore-audio-cards-container {
+    width: 100%;
+}
+

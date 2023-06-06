@@ -1,0 +1,38 @@
+@import 'src/consts.scss';
+
+.profile-page {
+  padding: 20px 30px;
+  .section-header {
+    font-size: 1.4rem;
+    color: $fourth;
+    font-weight: bold;
+    text-align: start;
+  }
+
+  .user-display-name {
+    font-size: 1.6rem;
+    color: $off-white;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .avatar-container {
+    position: relative;
+  }
+
+  .name-edit-icon {
+    top: 4px;
+    position: absolute;
+    transition: 0.3s;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.8);
+    }
+
+  }
+  .no-songs-message {
+    margin: 2rem 3rem;
+    display: flex;
+    justify-content: start;
+  }
+}

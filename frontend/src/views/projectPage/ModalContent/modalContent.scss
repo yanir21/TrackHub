@@ -1,0 +1,61 @@
+@import 'src/consts.scss';
+.modal-content {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+  .mid-section {
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .description-title {
+    margin-bottom: 10px;
+  }
+
+  .footer {
+    margin-top: 20px;
+    margin-left: auto;
+    font-size: 1.1rem;
+  }
+
+  .close-button {
+    color: $third;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      color: $off-white;
+    }
+  }
+
+  .submit-button {
+    margin-left: 10px;
+    color: $primary;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      color: $off-white;
+    }
+  }
+
+  .description-input {
+    background-color: $dark;
+    border: none;
+    outline: none;
+    color: $off-white;
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    resize: none;
+  }
+
+  .error-text {
+    color: salmon;
+    margin-top: 6px;
+  }
+}

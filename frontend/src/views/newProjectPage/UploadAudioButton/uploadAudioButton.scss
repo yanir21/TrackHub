@@ -1,0 +1,22 @@
+@import 'src/consts.scss';
+
+.upload-audio-svg {
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 100%;
+
+    &:hover, [drop-active=true] {
+        border-radius: 100% ;
+        background-color: $off-white;
+        opacity: 90%;
+        box-shadow: 0 0 10px 5px $primary;
+    }
+}
+
+.upload-audio-svg-hovered {
+        border-radius: 100% ;
+        background-color: $off-white;
+        opacity: 90%;
+        box-shadow: 0 0 10px 5px $primary;
+}
+
