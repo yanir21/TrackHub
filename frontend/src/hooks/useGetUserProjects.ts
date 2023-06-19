@@ -10,12 +10,16 @@ interface UseGetUserProjectProps {
 
 const useGetUserProjects = ({ userId }: UseGetUserProjectProps) => {
   const fetcher = async (url: string) => {
-    const res = await http.get(url);
-    return res.data as Promise<Project[]>;
+    if (!userId) {
+      return [];
+    } else {
+      const res = await http.get(url);
+      return res.data as Promise<Project[]>;
+    }
   };
 
   const { data, error, isLoading } = useSWR<Project[]>(
-    `/projects/${userId}`,
+    `/projects/user/${userId}`,
     fetcher
   );
 

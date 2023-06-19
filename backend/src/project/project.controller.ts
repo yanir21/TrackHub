@@ -79,7 +79,7 @@ export class ProjectController {
         );
     }
 
-    @Get('user/:id')
+    @Get('/user/:id')
     // TODO: add skip and limit
     async findAllOfUser(@Param('id') userId: string) {
         const projects = await this.projectService.findAllOfUser(userId);

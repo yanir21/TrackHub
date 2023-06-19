@@ -70,22 +70,22 @@ export class SuggestionController {
         return newSuggestion;
     }
 
-    @Get()
-    async findAllOfUser(@Username() username: string) {
-        const suggester = await this.userService.getUserByUsername(username);
-        const suggestions = await this.suggestionService.findAllOfUser(
-            suggester._id
-        );
+    @Get('/user/:id')
+    async findAllOfUser(@Param('id') userId: string) {
+        const suggestions = await this.suggestionService.findAllOfUser(userId);
+        const distinctProjects = [
+            ...new Set(suggestions.map((suggestion) => suggestion.project))
+        ];
         return Promise.all(
-            suggestions.map(async (suggestion) => {
+            distinctProjects.map(async (project) => {
                 // TODO: remove this if clause, when the data is correct
-                if (suggestion.track) {
-                    suggestion.track.url =
+                if (project.masterTrack) {
+                    project.masterTrack.url =
                         await this.trackService.getTrackUrlById(
-                            suggestion.track._id
+                            project.masterTrack._id
                         );
                 }
-                return suggestion;
+                return project;
             })
         );
     }

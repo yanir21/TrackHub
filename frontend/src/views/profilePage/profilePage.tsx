@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../App';
 import UserAvatar from '../../components/UserAvatar/userAvatar';
 import { AuthContextType } from '../../models/AuthContext';
@@ -9,6 +9,7 @@ import ExploreAudioCard from '../../components/ExploreAudioCard/exploreAudioCard
 import useGetUserProjects from '../../hooks/useGetUserProjects';
 import Button from '../../components/Button/button';
 import { useNavigate } from 'react-router-dom';
+import useGetUserSuggestions from '../../hooks/useGetUserSuggestions';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -18,13 +19,13 @@ const ProfilePage = () => {
     data: ownedProjects,
     loading: ownedLoading,
     error: ownedError
-  } = useGetUserProjects({ userId: currentUser?.id || '' });
+  } = useGetUserProjects({ userId: currentUser?.sub || '' });
 
   const {
     data: contributedProjects,
     loading: contributedLoading,
     error: contributedError
-  } = useGetProjects();
+  } = useGetUserSuggestions({ userId: currentUser?.sub || '' });
 
   if (ownedError || contributedError) return <div>Error</div>;
   if (ownedLoading || contributedLoading) return <div>Loading...</div>;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ProjectCreate } from '../models/project';
+import { Project, ProjectCreate } from '../models/project';
 import http from '../services/http';
 import useSWR from 'swr';
 import { Tag } from '../models/tag';
@@ -8,14 +8,18 @@ interface UseGetUserProjectProps {
   userId: string;
 }
 
-const useGetUserProjects = ({ userId }: UseGetUserProjectProps) => {
+const useGetUserSuggestions = ({ userId }: UseGetUserProjectProps) => {
   const fetcher = async (url: string) => {
-    const res = await http.get(url);
-    return res.data as Promise<ProjectCreate[]>;
+    if (userId) {
+      const res = await http.get(url);
+      return res.data as Promise<Project[]>;
+    } else {
+      return [];
+    }
   };
 
-  const { data, error, isLoading } = useSWR<ProjectCreate[]>(
-    `/projects/${userId}`,
+  const { data, error, isLoading } = useSWR<Project[]>(
+    `/suggestions/user/${userId}`,
     fetcher
   );
 
@@ -26,4 +30,4 @@ const useGetUserProjects = ({ userId }: UseGetUserProjectProps) => {
   };
 };
 
-export default useGetUserProjects;
+export default useGetUserSuggestions;
